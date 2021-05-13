@@ -23,10 +23,11 @@ public class usercontroller {
     @Autowired
     private iuser iiuser;
     
-    @PostMapping("join")
+    @PostMapping("joinprocess")
     public String join(uservo user)
     {
         try {
+            
             iiuser.save(user);
             
         } catch (Exception e) {
