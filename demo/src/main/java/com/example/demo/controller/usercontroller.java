@@ -22,20 +22,7 @@ public class usercontroller {
     
     @Autowired
     private iuser iiuser;
-    
-    @PostMapping("joinprocess")
-    public String join(uservo user)
-    {
-        try {
-            
-            iiuser.save(user);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "회원가입실패";
-        }
-        return "회원가입성공";
-    }
+
 
     @GetMapping("select")
     public String array()
