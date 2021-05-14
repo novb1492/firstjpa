@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmln:th="http://www.thymeleaf.org"></html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +8,24 @@
     <title>Document</title>
 </head>
 <body>
+  <p th:if="${return!=null}">
+    <script>
+      var a=null;
+    </script>
+          <p th:if="${return=='sameid'}">
+            <script>
+              a="이미존재한 아이디 입니다";
+            </script>
+          </p>
+          <p th:if="${return=='emthy'}">
+            <script>
+              a="빈칸이 존재 합니다";
+            </script>
+          </p>
+   <script>
+     alert(a);
+   </script>
+  </p>
   <a href="index.html">홈</a>
 
   <form action="joinprocess" method="post">

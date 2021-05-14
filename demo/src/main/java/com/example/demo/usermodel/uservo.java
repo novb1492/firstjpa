@@ -4,8 +4,12 @@ import java.security.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 
 
@@ -14,7 +18,7 @@ import javax.persistence.Table;
 public class uservo {
 
     @Id
-    @Column(name="id")
+    @Column(name="id",unique =true)
     private String id;
 
     @Column(name="pwd")
@@ -26,8 +30,7 @@ public class uservo {
     @Column(name="email")
     private String email;
 
-    @Column(name="created")
-    private Timestamp created;
+
     
     public void setid(String id)
     {
@@ -57,8 +60,6 @@ public class uservo {
     public String getEmail() {
         return email;
     }
-    public Timestamp getCreated() {
-        return created;
-    }
+  
    
 }
