@@ -30,10 +30,11 @@
   <a href="index.html">홈</a>
 
   <form action="joinprocess" method="post">
-      <input type="text" name="id" placeholder="write id">
-      <input type="password" name="pwd" placeholder="write pwd">
-      <input type="email" name="email" placeholder="write email">
-      <input type="name" name="name" placeholder="write name">
+    <div id="checkid"></div>
+    아이디 <input id="user_id"type="text" name="id" placeholder="write id">
+    비밀번호<input type="password" name="pwd" placeholder="write pwd">
+    이메일<input type="email" name="email" placeholder="write email">
+    이름<input type="name" name="name" placeholder="write name">
       <input type="submit" value="완료">
   </form>
 
@@ -41,7 +42,26 @@
 
   
   <script type="text/javascript"> 
-    $('.welcome').html('hello');
+    $('#user_id').on('keyup',function(){
+      $.ajax({
+        type:"post",
+        url:"comfirm",
+        data:{
+          "userid":$('#user_id').val()
+        },
+        success:function(data){
+          if($.trim(data)=="yes")
+          {
+            $('#user_id').css("background-color","blue");
+          }
+          else
+          {
+            alert("no")
+          }
+        }
+      })
+      
+    })
       </script> 
   
 
