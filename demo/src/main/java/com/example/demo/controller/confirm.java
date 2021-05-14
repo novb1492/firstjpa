@@ -18,7 +18,7 @@ public class confirm {
     private iuser iuser;
 
     @PostMapping("comfirm")
-    public String postMethodName(uservo user) {
+    public String checkemail(uservo user) {
 
         System.out.println(user.getEmail()+"userid");
         

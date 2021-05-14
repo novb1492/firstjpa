@@ -9,89 +9,97 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   </head>
 <body>
-  <p th:if="${return!=null}">
-    <script>
-      var a=null;
-    </script>
-          <p th:if="${return=='sameid'}">
-            <script>
-              a="이미존재한 아이디 입니다";
-            </script>
-          </p>
-          <p th:if="${return=='emthy'}">
-            <script>
-              a="빈칸이 존재 합니다";
-            </script>
-          </p>
-   <script>
-     alert(a);
-   </script>
-  </p>
-  <a href="index.html">홈</a>
-
-  <form action="joinprocess" method="post">
-    아이디 <input id="useremail"type="email" name="email" placeholder="이메일을 적어 주세요">`                     
+  <a href="index.html">홈</a>  
+<br>
+    <form  id="target" action="joinprocess" method="post">
+    이메일 <input type="email" name="email" id="useremail"  placeholder="이메일을 적어 주세요">                   
     <div id="emailcheck"></div>
     비밀번호<input id="userpwd" type="password" name="pwd" placeholder="10자 이상으로 입력해주세요">
     <div id="passwordlength"></div>
-    이름<input type="name" id="username" name="name" placeholder="이름을 적어주세요">
+    이름<input type="text" id="username" name="name" placeholder="이름을 적어주세요">
     <div id="namecheck"></div>
+    </form>
     <br>
-      <input type="submit" value="완료">
-  </form>
+    <input type="button" value="완료" id="button">
+
+
   <script type="text/javascript"> 
-  $('#userpwd').on('keyup',function(){
-    if($('#userpwd').val().length<=10)
-    {
-      $('#userpwd').css('background-color','pink');
-      $('#passwordlength').html("비밀번호가 짧습니다");
-    }
-    else
-    {
-      $('#userpwd').css('background-color','blue');
-      $('#passwordlength').html("");
-    }
-  })
-    $('#useremail').on('keyup',function(){
-     
-      if($('#useremail').val().length>1)
+  $(function()
+  {
+    var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+    var check=false,check2=false,check3=false,check4=false;
+
+    $('#userpwd').on('keyup',function(){
+      if($('#userpwd').val().length<=10)
       {
-          $.ajax({
-          type:"post",
-          url:"comfirm",
-          data:{
-            "email":$('#useremail').val()
-          },
-          success:function(data){
-            if($.trim(data)=="yes")
-            {
-              $('#useremail').css("background-color","blue");
-              $('#emailcheck').html('');
+        $('#userpwd').css('background-color','pink');
+        $('#passwordlength').html("비밀번호가 짧습니다");
+        check=false;
+      }
+      else
+      {
+        $('#userpwd').css('background-color','blue');
+        $('#passwordlength').html("");
+        check=true;
+      }
+    })
+      $('#useremail').on('keyup',function(){
+      
+        if($('#useremail').val().length>1)
+        {
+            $.ajax({
+            type:"post",
+            url:"comfirm",
+            data:{
+              "email":$('#useremail').val()
+            },
+            success:function(data){
+              if($.trim(data)=="yes")
+              {
+                $('#useremail').css("background-color","blue");
+                $('#emailcheck').html();
+                check2=true;
+              }
+              else
+              {
+                $('#useremail').css("background-color","pink");
+                $('#emailcheck').html('중복된이메일입니다');
+                check2=false;
+              }    
             }
-            else
-            {
-              $('#useremail').css("background-color","pink");
-              $('#emailcheck').html('중복된이메일입니다');
-            }
-            
+          })
+        } 
+        else
+        {
+          $('#useremail').css("background-color","pink");
+        }  
+      })
+      $('#username').on('keyup',function(){
+        if($('#username').val()=="")
+        {
+          $('#username').css("background-color","pink");
+          check3=false;
+        }
+        else
+        {
+          $('#username').css("background-color","blue");
+          check3=true;
+        }
+      })
+        $('#button').click(function(){//////////버튼 id를 적어야한다
+          if(check&check2&check3)
+          {
+            $('#target').submit();////////// 목표 form적어햐하고  20210514
           }
+          else
+          {
+              alert(check,check2,check3);
+          }
+          
         })
-      } 
-      else
-      {
-        $('#useremail').css("background-color","pink");
-      }  
-    })
-    $('#username').on('keyup',function(){
-      if($('#username').val()=="")
-      {
-        $('#username').css("background-color","pink");
-      }
-      else
-      {
-        $('#username').css("background-color","blue");
-      }
-    })
+      
+      
+  })
       </script> 
   
 
