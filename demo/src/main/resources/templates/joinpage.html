@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </head>
 <body>
   <p th:if="${return!=null}">
     <script>
@@ -35,5 +36,14 @@
       <input type="name" name="name" placeholder="write name">
       <input type="submit" value="완료">
   </form>
+
+  <div class="welcome"></div>
+
+  
+  <script type="text/javascript"> 
+    $('.welcome').html('hello');
+      </script> 
+  
+
 </body>
 </html>
