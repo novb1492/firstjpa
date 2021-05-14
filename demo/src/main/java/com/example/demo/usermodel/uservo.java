@@ -18,8 +18,8 @@ import org.hibernate.annotations.CreationTimestamp;
 public class uservo {
 
     @Id
-    @Column(name="id",unique =true)
-    private String id;
+    @Column(name="email")
+    private String email;
 
     @Column(name="pwd")
     private String pwd;
@@ -27,19 +27,9 @@ public class uservo {
     @Column(name="name")
     private String name;
 
-    @Column(name="email")
-    private String email;
 
 
-    
-    public void setid(String id)
-    {
-        this.id=id;
-    }
-    public String getid()
-    {
-        return this.id;
-    }
+
     public void setpwd(String pwd)
     {
         this.pwd=pwd;

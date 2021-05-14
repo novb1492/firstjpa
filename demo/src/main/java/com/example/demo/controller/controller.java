@@ -27,7 +27,7 @@ public class controller {
         try {
         if(checkemthy(user))
         {
-            Optional<uservo> vo=iuser.findById(user.getid());
+            Optional<uservo> vo=iuser.findById(user.getEmail());
            if(vo.isEmpty())///일단 학원가기전까지는 이방법이 제일 편리 한거같다 20200514
            {
                 iuser.save(user);
@@ -56,7 +56,7 @@ public class controller {
     }
     private boolean checkemthy(uservo user)
     {
-        if(user.getEmail().isEmpty()||user.getName().isEmpty()||user.getid().isEmpty()||user.getpwd().isEmpty())
+        if(user.getEmail().isEmpty()||user.getName().isEmpty()||user.getpwd().isEmpty())
         {
             return false;
         }

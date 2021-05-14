@@ -30,41 +30,67 @@
   <a href="index.html">홈</a>
 
   <form action="joinprocess" method="post">
-    <div id="checkid"></div>
-    아이디 <input id="user_id"type="text" name="id" placeholder="write id">
-    <br>
-    <div id="checkidmessege"></div>
-    비밀번호<input type="password" name="pwd" placeholder="write pwd">
-    <br>
-    이메일<input type="email" name="email" placeholder="write email">
-    <br>
-    이름<input type="name" name="name" placeholder="write name">
+    아이디 <input id="useremail"type="email" name="email" placeholder="이메일을 적어 주세요">`                     
+    <div id="emailcheck"></div>
+    비밀번호<input id="userpwd" type="password" name="pwd" placeholder="10자 이상으로 입력해주세요">
+    <div id="passwordlength"></div>
+    이름<input type="name" id="username" name="name" placeholder="이름을 적어주세요">
+    <div id="namecheck"></div>
     <br>
       <input type="submit" value="완료">
   </form>
   <script type="text/javascript"> 
-    $('#user_id').on('keyup',function(){
-      $.ajax({
-        type:"post",
-        url:"comfirm",
-        data:{
-          "id":$('#user_id').val()
-        },
-        success:function(data){
-          if($.trim(data)=="yes")
-          {
-            $('#user_id').css("background-color","blue");
-            $('#checkidmessege').html('yes you can use');
+  $('#userpwd').on('keyup',function(){
+    if($('#userpwd').val().length<=10)
+    {
+      $('#userpwd').css('background-color','pink');
+      $('#passwordlength').html("비밀번호가 짧습니다");
+    }
+    else
+    {
+      $('#userpwd').css('background-color','blue');
+      $('#passwordlength').html("");
+    }
+  })
+    $('#useremail').on('keyup',function(){
+     
+      if($('#useremail').val().length>1)
+      {
+          $.ajax({
+          type:"post",
+          url:"comfirm",
+          data:{
+            "email":$('#useremail').val()
+          },
+          success:function(data){
+            if($.trim(data)=="yes")
+            {
+              $('#useremail').css("background-color","blue");
+              $('#emailcheck').html('');
+            }
+            else
+            {
+              $('#useremail').css("background-color","pink");
+              $('#emailcheck').html('중복된이메일입니다');
+            }
+            
           }
-          else
-          {
-            $('#user_id').css("background-color","pink");
-            $('#checkidmessege').html('already use id');
-          }
-          
-        }
-      })
-      
+        })
+      } 
+      else
+      {
+        $('#useremail').css("background-color","pink");
+      }  
+    })
+    $('#username').on('keyup',function(){
+      if($('#username').val()=="")
+      {
+        $('#username').css("background-color","pink");
+      }
+      else
+      {
+        $('#username').css("background-color","blue");
+      }
     })
       </script> 
   
