@@ -37,7 +37,7 @@ public class restcontroller {
               });//영속화시키는것
             if(pwd.equals(user.getpwd()))/////  자바 문자열 비교는 equals 다 왜 까먹고 시간을 이렇게 버렸니 20200515
             {
-                session.setAttribute("email",email);
+                session.setAttribute("email",user.getEmail());
                 return "yes";   
             }   
             else{
