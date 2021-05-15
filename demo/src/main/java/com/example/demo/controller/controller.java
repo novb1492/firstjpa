@@ -40,9 +40,14 @@ public class controller {
         return "joinpage";
     }
     @GetMapping("index")
-    public String makesession(HttpSession session)   
+    public String index(HttpSession session)   
     {
         return "index";
+    }
+    @GetMapping("mypage")
+    public String mypage(HttpSession session)   
+    {
+        return "mypage";
     }
     private boolean checkemthy(uservo user)
     {
