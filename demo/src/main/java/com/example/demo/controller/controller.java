@@ -39,7 +39,7 @@ public class controller {
         }
         return "joinpage";
     }
-    @GetMapping("makesession")
+    @GetMapping("index")
     public String makesession(HttpSession session)   
     {
         return "index";

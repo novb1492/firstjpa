@@ -27,8 +27,8 @@ public class uservo {
     @Column(name="name")
     private String name;
 
-
-
+    @Column(name="id")
+    private int id;
 
     public void setpwd(String pwd)
     {
@@ -50,6 +50,11 @@ public class uservo {
     public String getEmail() {
         return email;
     }
-  
+    public void setid(int id) {
+        this.id = id;
+    }
+    public int getid() {
+        return id;
+    }
    
 }
