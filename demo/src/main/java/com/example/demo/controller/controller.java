@@ -1,18 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.confirm;
-import java.util.Optional;
+
+
+import javax.servlet.http.HttpSession;
 
 import com.example.demo.usermodel.uservo;
 import com.example.demo.userservice.iuser;
-import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class controller {
@@ -40,8 +40,9 @@ public class controller {
         return "joinpage";
     }
     @GetMapping("makesession")
-    public String makesession()   
+    public String makesession(HttpSession session,Model model)   
     {
+        model.addAttribute("email", session.getAttribute("email"));
         return "index";
     }
     private boolean checkemthy(uservo user)

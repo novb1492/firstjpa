@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmln:th="http://www.thymeleaf.org"></html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="joinpage">회원가입</a>
-    <a href="loginpage">로그인</a>
+    <p th:if="${email==null}">
+        <a href="joinpage">회원가입</a>
+        <a href="loginpage">로그인</a>
+    </p>
+ 
+
+
+
     <a href="select">select</a>
     <a href="selecttwo">select2</a>
 </body>
