@@ -8,11 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    <p th:if="${email==null}">
+    <p th:if="${session.email==null}"><!--얘는 이렇게 바로 사용이 가능하다 model안해도 session에 집어 넣으면!-->
         <a href="joinpage">회원가입</a>
         <a href="loginpage">로그인</a>
     </p>
- 
+
+
 
 
 

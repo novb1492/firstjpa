@@ -40,9 +40,8 @@ public class controller {
         return "joinpage";
     }
     @GetMapping("makesession")
-    public String makesession(HttpSession session,Model model)   
+    public String makesession(HttpSession session)   
     {
-        model.addAttribute("email", session.getAttribute("email"));
         return "index";
     }
     private boolean checkemthy(uservo user)

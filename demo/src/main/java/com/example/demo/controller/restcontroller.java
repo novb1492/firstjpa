@@ -1,24 +1,18 @@
 package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 import java.util.Optional;
-
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
-
 import com.example.demo.usermodel.uservo;
 import com.example.demo.userservice.iuser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @RestController
-public class confirm {
+public class restcontroller {
     
     @Autowired
     private iuser iuser;
