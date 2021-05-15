@@ -30,6 +30,10 @@ public class uservo {
     @Column(name="id")
     private int id;
 
+ 
+
+
+
     public void setpwd(String pwd)
     {
         this.pwd=pwd;
@@ -56,5 +60,6 @@ public class uservo {
     public int getid() {
         return id;
     }
+
    
 }

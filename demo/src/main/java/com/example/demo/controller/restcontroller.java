@@ -18,17 +18,18 @@ public class restcontroller {
     private iuser iuser;
 
     @PostMapping("comfirm")
-    public String checkemail(uservo user) {
+    public String checkemail(@RequestParam("email")String email) {
 
-        System.out.println(user.getEmail()+"userid");
+        System.out.println(email+"userid");
         
-        Optional<uservo> vo=iuser.findById(user.getEmail());
+        Optional<uservo> vo=iuser.findById(email);
            if(vo.isEmpty())///일단 학원가기전까지는 이방법이 제일 편리 한거같다 20200514
            {
                 return "yes";
            }
         return "no";
     }
+
     @PostMapping("loginprocess")
     public String loginprocess(HttpSession session,@RequestParam("email")String email,@RequestParam("pwd")String pwd) {
         try {

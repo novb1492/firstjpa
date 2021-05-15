@@ -52,10 +52,11 @@
               "email":$('#useremail').val()
             },
             success:function(data){
+              console.log(data);
               if($.trim(data)=="yes")
               {
                 $('#useremail').css("background-color","blue");
-                $('#emailcheck').html();
+                $('#emailcheck').html("");
                 check2=true;
               }
               else
