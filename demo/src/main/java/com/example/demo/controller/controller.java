@@ -39,7 +39,11 @@ public class controller {
         }
         return "joinpage";
     }
-
+    @GetMapping("makesession")
+    public String makesession()   
+    {
+        return "index";
+    }
     private boolean checkemthy(uservo user)
     {
         if(user.getEmail().isEmpty()||user.getName().isEmpty()||user.getpwd().isEmpty())
