@@ -4,15 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>Document</title>
 </head>
 <body>
     <a href="index.html">홈</a>
 <br>
-  <form action="loginprocess" method="post">
-      <input type="text" name="id" placeholder="write id">
-      <input type="password" name="pwd" placeholder="write pwd">
-      <input type="submit" value="로그인">
+  <form>
+      email:<input type="email" id="useremail" name="id" placeholder="">
+      <br>
+      pwd:<input type="password" id="userpwd" name="pwd" placeholder="write pwd">
   </form>
+  <br>
+  <input type="button" value="로그인" id="button">
+
+  <script>
+$(function(){
+
+    $('#button').click(function(){
+        $.ajax({
+            type:"post",
+            url:"loginprocess",
+            data:{
+              "email":$('#useremail').val(),
+              "pwd":$('#userpwd').val(),
+            },
+            success:function(data){
+
+              if($.trim(data)=="yes")
+              {
+                location.href="makesession";
+              }
+              else if($.trim(data)=="wrongpwd")
+              {
+                alert('비밀번호가 틀립니다');
+              } 
+              else
+              {
+                alert('일치하는 이메일이 없습니다');
+              }   
+            }
+
+        })
+
+    })
+
+
+
+})
+
+  </script>
+
 </body>
 </html>

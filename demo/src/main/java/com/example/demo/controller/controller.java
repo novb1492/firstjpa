@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class controller {
@@ -23,7 +24,10 @@ public class controller {
     public String join() {
         return "joinpage";
     }
-
+    @GetMapping("loginpage")
+    public String loginpage() {
+        return "loginpage";
+    }
     @PostMapping("joinprocess")
     public String  joinprocess(uservo user, Model model) {   
         try {
@@ -35,6 +39,7 @@ public class controller {
         }
         return "joinpage";
     }
+
     private boolean checkemthy(uservo user)
     {
         if(user.getEmail().isEmpty()||user.getName().isEmpty()||user.getpwd().isEmpty())
