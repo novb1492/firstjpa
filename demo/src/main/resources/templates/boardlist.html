@@ -21,14 +21,14 @@
         <th>제목</th>
         <th>작성자</th>
     </tr>
-    <tr th:each="list : ${title}">
+    <tr th:each="list : ${titles}">
         <td th:text="${list.getbid}"></td>
-        <td ><a href="content?bid=@{'/?page=' + ${pageNum}}" th:text="${list.gettitle}"></a></td>
+        <td ><a href="#" th:text="${list.gettitle}"></a></td>
         <td th:text="${list.getemail}"></td>
     </tr>
 </table>
-<div th:each="num: ${#numbers.sequence(1,nums)}">
-    [[${num}]]
+<div th:each="num: ${#numbers.sequence(1,pages)}">
+    <a th:href="@{boardlist(page=${num})}">[[${num}]]</a>
 </div>
 </body>
 </html>
