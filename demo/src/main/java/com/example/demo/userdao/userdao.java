@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface iuser extends JpaRepository<uservo,String> {
+public interface userdao extends JpaRepository<uservo,String> {
     
 
 }

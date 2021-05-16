@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface iboard extends JpaRepository<boardvo,String>{
+public interface boarddao extends JpaRepository<boardvo,String>{
 
     
 

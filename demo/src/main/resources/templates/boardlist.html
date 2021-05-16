@@ -23,7 +23,7 @@
     </tr>
     <tr th:each="list : ${titles}">
         <td th:text="${list.getbid}"></td>
-        <td ><a href="#" th:text="${list.gettitle}"></a></td>
+        <td ><a th:href="@{content(bid=${list.getbid})}"><div th:text="${list.gettitle}"></a></div></td> <!--후아 th 진짜 jspl에비해 쓰레기다 진짜 링크거는것도 찾는라 힘들었네 웃기네20210516-->
         <td th:text="${list.getemail}"></td>
     </tr>
 </table>
