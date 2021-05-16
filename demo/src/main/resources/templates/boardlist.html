@@ -15,6 +15,20 @@
     <div th:if="${session.email}"><!--else문을 모르겠다-->
         <a href="mypage">마이페이지</a>
     </div>
-    <a href="boardlist">게시판</a>
+<table>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>작성자</th>
+    </tr>
+    <tr th:each="list : ${title}">
+        <td th:text="${list.getbid}"></td>
+        <td ><a href="#" th:text="${list.gettitle}"></a></td>
+        <td th:text="${list.getemail}"></td>
+    </tr>
+</table>
+<div th:each="num: ${#numbers.sequence(1,nums)}">
+    <div th:text="${num}"></div>
+</div>
 </body>
 </html>

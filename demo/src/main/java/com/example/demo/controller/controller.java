@@ -2,14 +2,17 @@ package com.example.demo.controller;
 
 
 
-import java.security.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.boarddao.iboard;
+import com.example.demo.boradmodel.boardvo;
+import com.example.demo.userdao.iuser;
 import com.example.demo.usermodel.uservo;
-import com.example.demo.userservice.iuser;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,8 @@ public class controller {
     
     @Autowired
     private iuser iuser;
+    @Autowired
+    private iboard iboard;
 
     @GetMapping("joinpage")
     public String join() {
@@ -46,19 +51,19 @@ public class controller {
     @GetMapping("index")
     public String index(HttpSession session)   
     {
+      
         return "index";
+    }
+    @GetMapping("boardlist")
+    public String boardlist(HttpSession session,Model model) {
+        model.addAttribute("nums",7);
+        model.addAttribute("title", iboard.findAll());
+        return "boardlist";
     }
     @GetMapping("mypage")
     public String mypage(HttpSession session)   
     {
         return "mypage";
     }
-    private boolean checkemthy(uservo user)
-    {
-        if(user.getEmail().isEmpty()||user.getName().isEmpty()||user.getpwd().isEmpty())
-        {
-            return false;
-        }
-        return true;
-    }
+
 }

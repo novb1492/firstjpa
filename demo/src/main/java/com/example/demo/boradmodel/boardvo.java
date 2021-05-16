@@ -14,16 +14,33 @@ public class boardvo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//프로젝트에 연결된 db의 넘버링 전략 따라감 ex auto_increment처럼
-    @Column(name="id")
-    private int id;
+    @Column(name="bid")
+    private int bid;
+
+    @Column(name="email") 
+    private String email;
 
     @Column(name="title") 
     private String title;
 
+    @Column(name="content") 
+    private String content;
 
- public int getid()
+    @Column(name="hit") 
+    private int hit;
+
+
+ public int getbid()
  {
-     return this.id;
+     return this.bid;
+ }
+ public void setemail(String email)
+ {
+     this.email=email;
+ }
+ public String getemail()
+ {
+     return this.email;
  }
  public void settitle(String title)
  {
@@ -32,5 +49,13 @@ public class boardvo {
  public String gettitle()
  {
      return this.title;
+ }
+ public void setcontent(String content)
+ {
+     this.content=content;
+ }
+ public String getcontent()
+ {
+     return this.content;
  }
 }
