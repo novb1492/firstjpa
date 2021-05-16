@@ -6,7 +6,9 @@ package com.example.demo.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import com.example.demo.service.boardservice;
 import com.example.demo.userdao.userdao;
 import com.example.demo.usermodel.uservo;
 
+import org.apache.logging.log4j.util.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -74,7 +77,9 @@ public class controller {
         return "boardlist";
     }
     @GetMapping("content")
-    public String content() {
+    public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
+        boardvo vo=boarddao.findById(bid).orElseThrow(null);
+        model.addAttribute("array", vo);
         return "content";
     }
     @GetMapping("mypage")
@@ -82,7 +87,6 @@ public class controller {
     {
         return "mypage";
     }
-    @RequestMapping("")
     private Page<boardvo> paging(int currentpage) {
 
         return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));

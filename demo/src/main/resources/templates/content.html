@@ -8,6 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-
+    <div th:text="${session.email}"></div>
+    <p>
+        <div th:with="article = ${array}">
+        <div  th:text="${'글제목'+'&nbsp'+article.gettitle}">글제목</div> 
+        <br>
+        <div  th:text="${'작성자'+'&nbsp'+article.getemail}"></div>
+        <br>
+        글내용
+        <div  th:text="${article.gettitle}"></div>
+        </div>
+    </p>
 </body>
 </html>
