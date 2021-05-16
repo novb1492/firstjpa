@@ -23,12 +23,12 @@
     </tr>
     <tr th:each="list : ${title}">
         <td th:text="${list.getbid}"></td>
-        <td ><a href="#" th:text="${list.gettitle}"></a></td>
+        <td ><a href="content?bid=@{'/?page=' + ${pageNum}}" th:text="${list.gettitle}"></a></td>
         <td th:text="${list.getemail}"></td>
     </tr>
 </table>
 <div th:each="num: ${#numbers.sequence(1,nums)}">
-    <div th:text="${num}"></div>
+    [[${num}]]
 </div>
 </body>
 </html>
