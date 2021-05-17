@@ -66,9 +66,12 @@ public class controller {
         return "boardlist";
     }
     @GetMapping("content")
+    @Transactional
     public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
-        uphit(bid,vo);
+        int nhit=vo.gethit()+1;
+        vo.sethit(nhit);
+        System.out.println("hit"+vo.gethit());//신기하네 함수로 빼니까 왜안되는거냐
         model.addAttribute("array", vo);
         return "content";
     }
@@ -88,18 +91,7 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
-    
-    @Transactional
-    private void uphit(int bid,boardvo vo) {
-        try {
-            boardvo boardvo=boarddao.findById(bid).orElseThrow();
-            int nhit=vo.gethit()+1;
-            boardvo.sethit(nhit);
-        } catch (Exception e) {
-           e.printStackTrace();
-        }
-   
-    }
+
     private Page<boardvo> paging(int currentpage) {
 
         return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));

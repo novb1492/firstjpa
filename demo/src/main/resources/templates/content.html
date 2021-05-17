@@ -23,7 +23,7 @@
         </div>
     </p>
     <p>
-        <div th:text="${'조회수'+'&nbsp'+article.gethit}"></div>
+        <div th:text="${'조회수'+'&nbsp'+article.gethit}">조회수</div>
         <div th:text="${'작성일자'+'&nbsp'+article.getcreated}"></div>
         <div th:if="${session.email==article.getemail}">
             <form action="updatecontent">
