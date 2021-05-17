@@ -28,7 +28,11 @@
     <script>
    $(function(){
        var check=false,check2=false,check3=false,check4=false;
-    $('#content').on('keyup',function(){
+    $('#content').on({
+        click:function(){
+            $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
+        },
+        keyup:function(){
         $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
         if($('#content').val().length==0)
         {
@@ -47,7 +51,7 @@
             check2=true;
             check=true;
         }
-    })
+    }})
     $('#title').keyup(function(){
         
         if($('#title').val().length==0)
