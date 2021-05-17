@@ -2,12 +2,16 @@ package com.example.demo.uservo;
 
 
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 
 
@@ -17,18 +21,21 @@ import javax.persistence.Table;
 public class uservo {
 
     @Id
-    @Column(name="email")
+    @Column(name="email",length = 30,unique=true,nullable = false)
     private String email;
 
-    @Column(name="pwd")
+    @Column(name="pwd",length = 100,nullable = false )
     private String pwd;
 
-    @Column(name="name")
+    @Column(name="name",length = 20,nullable = false)
     private String name;
 
-    @Column(name="id")
+    @Column(name="id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)///테이블은 여기서 만들고 mysql에서 오토인크리먼트하면된다
     private int id;
 
+    @CreationTimestamp
+    private Timestamp created;///이놈때매 테이블은 앞으로 여기서 만들어야겠다
 
  
     public void setpwd(String pwd)
