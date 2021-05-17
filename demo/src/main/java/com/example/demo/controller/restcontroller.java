@@ -71,8 +71,8 @@ public class restcontroller {
         
     }
     @Transactional
-    @PostMapping("updatearticeprocess")
-    public String updatearticeprocess(HttpSession session,boardvo vo,@RequestParam("bid")int bid) {
+    @PostMapping("updatecontentprocess")
+    public String updatecontentprocess(HttpSession session,boardvo vo,@RequestParam("bid")int bid) {
         try {
             System.out.println(bid+"iddddd");
             boardvo boardvo=boarddao.findById(bid).orElseThrow();
