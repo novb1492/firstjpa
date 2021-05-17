@@ -61,7 +61,7 @@ public class controller {
     public String boardlist(HttpSession session,Model model,@RequestParam(value="page", defaultValue = "1") int pageNum) {
 
         Page<boardvo>array=paging(pageNum);
-        model.addAttribute("titles", array);///와 이거 신세계다 찾는데 한참걸렸지만 쥑인다
+        model.addAttribute("titles", array);
         model.addAttribute("pages", array.getTotalPages());/////////////와 totalpages 미쳤다 이거구나 page 진짜 이거 익히는데 앛미10시부터 오후 4시꺼자.. 20210516 뭔지 감이온다!
         return "boardlist";
     }
@@ -69,8 +69,7 @@ public class controller {
     @Transactional
     public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
-        int nhit=vo.gethit()+1;
-        vo.sethit(nhit);
+        vo.sethit(vo.gethit()+1);
         System.out.println("hit"+vo.gethit());//신기하네 함수로 빼니까 왜안되는거냐
         model.addAttribute("array", vo);
         return "content";
@@ -94,7 +93,7 @@ public class controller {
 
     private Page<boardvo> paging(int currentpage) {
 
-        return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));
+        return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
         
     }
 
