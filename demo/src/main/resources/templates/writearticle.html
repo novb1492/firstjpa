@@ -12,7 +12,7 @@
     <a href="index">홈</a>
     <br>
     <h1>글을 작성해주세요</h1>
-  
+    <div id="errorcontent2"></div>
     <div th:text="'작성자'+'&nbsp'+${session.email}"></div>
      제목 <input type="text" name="title" placeholder="30글자 이하로 입력해주세요" id="title"><div id="errortitle"></div>
      <br>
@@ -23,50 +23,31 @@
 
     <script>
    $(function(){
-       var check=false,check2=false,check3=false,check4=false;
-    $('#content').keyup(function(){
-        $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
-        if($('#content').val().length==0)
-        {
-            $('#errorcontent').html("입력된 글자가 없습니다");
-            $('#content').css('background-color','pink');
-            check=false;
-        }
-        else if($('#content').val().length>1000)
-        {
-            check2=false;
-            alert('글내용 글자수는 최대 1000자입니다');
-        }
-        else
-        {
-            $('#content').css('background-color','white');
-            check2=true;
-            check=true;
-        }
-    })
-    $('#title').keyup(function(){
-        
-        if($('#title').val().length==0)
-        {
-            $('#title').css('background-color','pink');
-            check3=false;
-        }
-        else if($('#title').val().length>30)
-        {
-            check4=false;
-            alert('제목 글자수는 최대 30자입니다');
-            $('#title').css('background-color','pink');
-        }
-        else
-        {
-            $('#title').css('background-color','white');
-            check4=true;
-            check3=true;
-        }
+       
+    var check="false",check2="false";///왜 불이 안되는건지 모르겠다
 
+    $('#content').on({
+        keyup:function(){
+        $('#errorcontent').html('입력한 글자 수'+$('#content').val().length,check);
+        check2=checkcondition($('#content'),0,1000,check);    
+        
+    },
+    click:function()
+    {
+        check2=checkcondition($('#content'),0,1000,check);
+    }
+    })
+    $('#title').on({
+        keyup:function(){
+            check=checkcondition($('#title'),0,30,check);
+        },
+        click:function()
+        {
+            check=checkcondition($('#title'),0,30,check);
+        }
     })
     $('#button').click(function(){
-        if(check==true&&check2==true&&check3==true&&check4==true)
+        if(check2=="true"&&check=="true")
         {
            $.ajax({
             type:"post",
@@ -86,10 +67,40 @@
            })
         }
         else{
-            alert('빈칸이 있습니다');
+            
+            alert('빈칸이 있거나 글자수가 초과합니다');
         }
     })
    })
+   function checkcondition(data,min,max)
+   {        
+
+    if(data.val().length==min)
+        {
+            $('#errorcontent').html("입력된 글자가 없습니다");
+            data.css('background-color','pink');
+            return "false";
+        }
+        else if(data.val().length>max)
+        {
+            
+            data.css('background-color','pink');
+            if(max==1000)
+            {
+                alert('글내용 글자수는 최대 1000자입니다');
+            }
+            else
+            {
+                alert('글제목 글자수는 최대 30자입니다');
+            }
+            return "false";
+        }
+        else
+        {
+            data.css('background-color','white');
+            return "true";
+        }
+   }
     </script>
 </body>
 </html>

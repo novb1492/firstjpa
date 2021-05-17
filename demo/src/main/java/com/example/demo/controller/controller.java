@@ -1,21 +1,12 @@
 package com.example.demo.controller;
 
 
-
-
-
-
-
-
 import javax.servlet.http.HttpSession;
-
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.service.boardservice;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -25,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 
 

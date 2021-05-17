@@ -27,56 +27,28 @@
 
     <script>
    $(function(){
-       var check=false,check2=false,check3=false,check4=false;
-    $('#content').on({
-        click:function(){
-            $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
-        },
-        keyup:function(){
-        $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
-        if($('#content').val().length==0)
-        {
-            $('#errorcontent').html("입력된 글자가 없습니다");
-            $('#content').css('background-color','pink');
-            check=false;
-        }
-        else if($('#content').val().length>1000)
-        {
-            check2=false;
-            alert('글내용 글자수는 최대 1000자입니다');
-        }
-        else
-        {
-            $('#content').css('background-color','white');
-            check2=true;
-            check=true;
-        }
-    }})
-    $('#title').keyup(function(){
-        
-        if($('#title').val().length==0)
-        {
-            $('#title').css('background-color','pink');
-            check3=false;
-        }
-        else if($('#title').val().length>30)
-        {
-            check4=false;
-            alert('제목 글자수는 최대 30자입니다');
-            $('#title').css('background-color','pink');
-        }
-        else
-        {
-            $('#title').css('background-color','white');
-            check4=true;
-            check3=true;
-        }
-
+       var check="true",check2="true";
+       ////우와 이런게 있었네 조금만 빨리 찾아볼껄 20210517
+    $('#content').on("propertychange change keyup paste input",function(){
+        $('#errorcontent').html('입력한 글자 수'+$('#content').val().length,check);
+        check1=checkcondition($('#content'),0,1000);
+    })
+    $('#title').on("propertychange change keyup paste input",function(){
+        check2=checkcondition($('#title'),0,30);
     })
     $('#button').click(function(){
-        if(check==true&&check2==true&&check3==true&&check4==true)
+        if(check=="true"&&check2=="true")
         {
-           $.ajax({
+           doajax();
+        }
+        else{
+            alert('빈칸이 존재하거나 글자수가 초과합니다');
+        }
+    })
+   })
+   function doajax()
+   {
+    $.ajax({
             type:"post",
             url:"updatearticeprocess",
             data:{
@@ -93,12 +65,35 @@
                 {alert('문제가 생겼습니다');}       
             }       
            })
+   }
+   function checkcondition(data,min,max)
+   {        
+    if(data.val().length==min)
+        {
+            $('#errorcontent').html("입력된 글자가 없습니다");
+            data.css('background-color','pink');
+            return "false";
         }
-        else{
-            alert('빈칸이 있습니다');
+        else if(data.val().length>max)
+        {
+            
+            data.css('background-color','pink');
+            if(max==1000)
+            {
+                alert('글내용 글자수는 최대 1000자입니다');
+            }
+            else
+            {
+                alert('글제목 글자수는 최대 30자입니다');
+            }
+            return "false";
         }
-    })
-   })
+        else
+        {
+            data.css('background-color','white');
+            return "true";
+        }
+   }
     </script>
 </body>
 </html>
