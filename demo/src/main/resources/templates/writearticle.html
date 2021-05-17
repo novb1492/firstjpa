@@ -12,19 +12,20 @@
     <a href="index">홈</a>
     <br>
     <h1>글을 작성해주세요</h1>
-    <form action="writearticleprocess" method="POST" id="target">
+  
     <div th:text="'작성자'+'&nbsp'+${session.email}"></div>
-     제목 <input type="text" name="title"><div id="errortitle"></div>
+     제목 <input type="text" name="title" placeholder="30글자 이하로 입력해주세요" id="title"><div id="errortitle"></div>
      <br>
     글내용<div id="errorcontent"></div>
-    <br> <textarea cols="100" rows="50" name="content" id="content"></textarea>
-    </form>
+    <br> <textarea cols="100" rows="50" name="content" id="content" placeholder="최대 입력글자는 1000자입니다"></textarea>
+    <input type="hidden" name="email" th:value="${session.getemail}">
     <br>
     <input type="button" id="button" value="완료">
+
     <script>
    $(function(){
-       var check=false,check2=false;
-    $('#content').on('keyup',function(){
+       var check=false,check2=false,check3=false,check4=false;
+    $('#content').keyup(function(){
         $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
         if($('#content').val().length==0)
         {
@@ -39,14 +40,51 @@
         }
         else
         {
+            $('#content').css('background-color','white');
             check2=true;
             check=true;
         }
     })
-    $('#button').click(function(){
-        if(check==true&&check2==true)
+    $('#title').keyup(function(){
+        
+        if($('#title').val().length==0)
         {
-            $('#target').submit();////////// 목표 form적어햐하고  20210514 
+            $('#title').css('background-color','pink');
+            check3=false;
+        }
+        else if($('#title').val().length>30)
+        {
+            check4=false;
+            alert('제목 글자수는 최대 30자입니다');
+            $('#title').css('background-color','pink');
+        }
+        else
+        {
+            $('#title').css('background-color','white');
+            check4=true;
+            check3=true;
+        }
+
+    })
+    $('#button').click(function(){
+        if(check==true&&check2==true&&check3==true&&check4==true)
+        {
+           $.ajax({
+            type:"post",
+            url:"writearticleprocess",
+            data:{
+              "title":$('#title').val(),
+              "email":$('#email').val(),
+              "content":$('#content').val(),
+            },
+            success:function(data){
+            if($.trim(data)=="yes")
+            {
+            location.href="boardlist";
+            }
+            
+            }       
+           })
         }
         else{
             alert('빈칸이 있습니다');
