@@ -8,16 +8,42 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="index">홈</a>
     <div th:text="${session.email}"></div>
+    <div th:with="article = ${array}">
     <p>
-        <div th:with="article = ${array}">
+        <div>
         <div  th:text="${'글제목'+'&nbsp'+article.gettitle}">글제목</div> 
         <br>
         <div  th:text="${'작성자'+'&nbsp'+article.getemail}"></div>
         <br>
         글내용
-        <div  th:text="${article.gettitle}"></div>
+        <div  th:text="${article.getcontent}"></div>
         </div>
     </p>
+    <p>
+        <div th:if="${session.email==article.getemail}">
+            <form action="updatecontent">
+                <input type="hidden" name="bid" th:value="${article.getbid}">
+                <input type="submit" id="update" value="수정">
+            </form>
+            <form action="deletecontent">
+                <input type="submit" id="delete" value="삭제">
+            </form>
+        </div>
+    </p>
+</div>
+    <p>
+    댓글
+    <div th:if="${session.email!=null}">
+    <input type="text" id="comment" name="comment" placeholder="최대 n자입니다">
+    <input type="button" id="button" value="완료">
+    </div>
+    </p>
+    <script>
+$(function(){
+
+})
+    </script>
 </body>
 </html>

@@ -50,7 +50,7 @@ public class controller {
         return "loginpage";
     }
     @PostMapping("joinprocess")
-    public String  joinprocess(uservo user, Model model) {   
+    public String  joinprocess(uservo user) {   
         try {
         userdao.save(user);
         return "loginpage";
@@ -87,6 +87,13 @@ public class controller {
     @GetMapping("writearticle")
     public String writeartticle(HttpSession session) {
         return "writearticle";   
+    }
+    @GetMapping("updatecontent")
+    public String updatecontent(HttpSession session,@RequestParam("bid")int bid,Model model) {
+        
+        boardvo vo=boarddao.findById(bid).orElseThrow(null);
+        model.addAttribute("boardvo", vo);
+        return "updatecontent";
     }
     private Page<boardvo> paging(int currentpage) {
 

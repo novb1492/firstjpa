@@ -22,13 +22,13 @@ public class boardvo {
     @Column(name="bid")
     private int bid;
 
-    @Column(nullable = false, name="email") 
+    @Column(nullable = false, name="email",length = 50) 
     private String email;
 
-    @Column(nullable = false,name="title") 
+    @Column(nullable = false,name="title",length = 100 ) 
     private String title;
 
-    @Column(nullable = false,name="content") 
+    @Column(nullable = false,name="content",length = 1000) 
     private String content;
 
     @ColumnDefault("0")

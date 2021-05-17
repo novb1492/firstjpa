@@ -12,19 +12,23 @@
     <a href="index">홈</a>
     <br>
     <h1>글을 작성해주세요</h1>
-  
+    
     <div th:text="'작성자'+'&nbsp'+${session.email}"></div>
-     제목 <input type="text" name="title" placeholder="30글자 이하로 입력해주세요" id="title"><div id="errortitle"></div>
-     <br>
-    글내용<div id="errorcontent"></div>
-    <br> <textarea cols="100" rows="50" name="content" id="content" placeholder="최대 입력글자는 1000자입니다"></textarea>
+            <div th:with="article = ${boardvo}">
+            글번호 <div th:text="${article.getbid}"></div>
+            제목 <input type="text" name="title" placeholder="30글자 이하로 입력해주세요" id="title" th:value="${article.gettitle}"><div id="errortitle"></div>
+            <br>
+            글내용<div id="errorcontent"></div>
+            <br> <textarea cols="100" rows="50" name="content" id="content" placeholder="최대 입력글자는 1000자입니다"th:text="${article.getcontent}" ></textarea>
+            <input type="hidden" id="bid" th:value="${article.getbid}">
+    </div>
     <br>
     <input type="button" id="button" value="완료">
 
     <script>
    $(function(){
        var check=false,check2=false,check3=false,check4=false;
-    $('#content').keyup(function(){
+    $('#content').on('keyup',function(){
         $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
         if($('#content').val().length==0)
         {
@@ -70,10 +74,11 @@
         {
            $.ajax({
             type:"post",
-            url:"writearticleprocess",
+            url:"updatearticeprocess",
             data:{
               "title":$('#title').val(),
               "content":$('#content').val(),
+              "bid":$('#bid').val(),
             },
             success:function(data){
                 if($.trim(data)=="yes")

@@ -10,6 +10,7 @@ import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -65,6 +66,21 @@ public class restcontroller {
             return "yes";
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return "no";
+        
+    }
+    @Transactional
+    @PostMapping("updatearticeprocess")
+    public String updatearticeprocess(HttpSession session,boardvo vo,@RequestParam("bid")int bid) {
+        try {
+            System.out.println(bid+"iddddd");
+            boardvo boardvo=boarddao.findById(bid).orElseThrow();
+            boardvo.settitle(vo.gettitle());
+            boardvo.setcontent(vo.getcontent());
+            return "yes";
+        } catch (Exception e) {
+           e.printStackTrace();
         }
         return "no";
         
