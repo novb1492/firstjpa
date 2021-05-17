@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.service.boardservice;
@@ -66,6 +68,7 @@ public class controller {
     @GetMapping("content")
     public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
+        uphit(bid,vo);
         model.addAttribute("array", vo);
         return "content";
     }
@@ -85,11 +88,24 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
+    
+    @Transactional
+    private void uphit(int bid,boardvo vo) {
+        try {
+            boardvo boardvo=boarddao.findById(bid).orElseThrow();
+            int nhit=vo.gethit()+1;
+            boardvo.sethit(nhit);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+   
+    }
     private Page<boardvo> paging(int currentpage) {
 
         return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));
         
     }
+
  
     
  

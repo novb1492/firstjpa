@@ -23,11 +23,15 @@
         <th>순서</th>
         <th>제목</th>
         <th>작성자</th>
+        <th>작성일자</th>
+        <th>조회수</th>
     </tr>
     <tr th:each="list : ${titles}">
         <td th:text="${list.getbid}"></td>
         <td ><a th:href="@{content(bid=${list.getbid})}"><div th:text="${list.gettitle}"></a></div></td> <!--후아 th 진짜 jspl에비해 쓰레기다 진짜 링크거는것도 찾는라 힘들었네 웃기네20210516-->
         <td th:text="${list.getemail}"></td>
+        <td th:text="${list.getcreated}"></td>
+        <td th:text="${list.gethit}"></td>
     </tr>
 </table>
 <div th:each="num: ${#numbers.sequence(1,pages)}">
