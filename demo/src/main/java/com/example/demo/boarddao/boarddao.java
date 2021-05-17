@@ -4,7 +4,7 @@ package com.example.demo.boarddao;
 
 
 
-import com.example.demo.boradmodel.boardvo;
+import com.example.demo.boradvo.boardvo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,6 +1,6 @@
-package com.example.demo.usermodel;
+package com.example.demo.uservo;
 
-import java.security.Timestamp;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 
 

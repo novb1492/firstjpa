@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.boarddao.boarddao;
+import com.example.demo.boradvo.boardvo;
 import com.example.demo.userdao.userdao;
-import com.example.demo.usermodel.uservo;
+import com.example.demo.uservo.uservo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,8 @@ public class restcontroller {
     
     @Autowired
     private userdao userdao;
+    @Autowired
+    private boarddao boarddao;
 
     @PostMapping("comfirm")
     public String checkemail(@RequestParam("email")String email) {
@@ -51,5 +55,18 @@ public class restcontroller {
             e.printStackTrace();
         }
         return "null";
+    }
+    @PostMapping("writearticleprocess")
+    public String writearticleprocess(HttpSession session,boardvo vo) {
+        
+        try {
+            vo.setemail((String)session.getAttribute("email"));
+            boarddao.save(vo);
+            return "yes";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "no";
+        
     }
 }

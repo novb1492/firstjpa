@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeleaf.org"></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <a href="index">홈</a>
+    <br>
+    <h1>글을 작성해주세요</h1>
+    <form action="writearticleprocess" method="POST" id="target">
+    <div th:text="'작성자'+'&nbsp'+${session.email}"></div>
+     제목 <input type="text" name="title"><div id="errortitle"></div>
+     <br>
+    글내용<div id="errorcontent"></div>
+    <br> <textarea cols="100" rows="50" name="content" id="content"></textarea>
+    </form>
+    <br>
+    <input type="button" id="button" value="완료">
+    <script>
+   $(function(){
+       var check=false,check2=false;
+    $('#content').on('keyup',function(){
+        $('#errorcontent').html('입력한 글자 수'+$('#content').val().length);
+        if($('#content').val().length==0)
+        {
+            $('#errorcontent').html("입력된 글자가 없습니다");
+            $('#content').css('background-color','pink');
+            check=false;
+        }
+        else if($('#content').val().length>1000)
+        {
+            check2=false;
+            alert('글내용 글자수는 최대 1000자입니다');
+        }
+        else
+        {
+            check2=true;
+            check=true;
+        }
+    })
+    $('#button').click(function(){
+        if(check==true&&check2==true)
+        {
+            $('#target').submit();////////// 목표 form적어햐하고  20210514 
+        }
+        else{
+            alert('빈칸이 있습니다');
+        }
+    })
+   })
+    </script>
+</body>
+</html>

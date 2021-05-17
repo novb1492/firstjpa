@@ -1,4 +1,6 @@
-package com.example.demo.boradmodel;
+package com.example.demo.boradvo;
+
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 @Entity
@@ -17,18 +22,21 @@ public class boardvo {
     @Column(name="bid")
     private int bid;
 
-    @Column(name="email") 
+    @Column(nullable = false, name="email") 
     private String email;
 
-    @Column(name="title") 
+    @Column(nullable = false,name="title") 
     private String title;
 
-    @Column(name="content") 
+    @Column(nullable = false,name="content") 
     private String content;
 
-    @Column(name="hit") 
+    @ColumnDefault("0")
+    @Column(nullable = false,name="hit") 
     private int hit;
 
+    @CreationTimestamp
+    private Timestamp created;
 
  public int getbid()
  {
@@ -57,5 +65,13 @@ public class boardvo {
  public String getcontent()
  {
      return this.content;
+ }
+ public void setcreated(Timestamp created)
+ {
+     this.created=created;
+ }
+ public Timestamp getcreated()
+ {
+     return this.created;
  }
 }
