@@ -79,6 +79,7 @@ public class controller {
         vo.sethit(vo.gethit()+1);//신기하네 함수로 빼니까 왜안되는거냐
        
         List<commentvo> commentvo=commentdao.findByTitle2(8);
+   
         model.addAttribute("title", commentvo);
         model.addAttribute("array", vo);
         return "content";

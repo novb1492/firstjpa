@@ -46,7 +46,10 @@
     </div>
     </p>
   
-        <div th:text="${title}"></div>
+    <div th:each="list : ${title}">
+        <div th:text="${'작성자'+'&nbsp'+list.getEmail}"></div>
+        <div th:text="${'내용'+'&nbsp'+list.getComment}"></div>
+    </div>
  
     <script>
 $(function()
