@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
+import com.example.demo.commentdao.commentdao;
+import com.example.demo.commentvo.commentvo;
 import com.example.demo.service.boardservice;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
@@ -30,7 +32,9 @@ public class controller {
     private userdao userdao;
     @Autowired
     private boarddao boarddao;
-
+    @Autowired
+    private commentdao commentdao;
+    
     private boardservice boardservice=new boardservice();
 
     @GetMapping("joinpage")
@@ -60,6 +64,7 @@ public class controller {
     @GetMapping("boardlist")
     public String boardlist(HttpSession session,Model model,@RequestParam(value="page", defaultValue = "1") int pageNum) {
 
+        
         Page<boardvo>array=paging(pageNum);
         model.addAttribute("titles", array);
         model.addAttribute("pages", array.getTotalPages());/////////////와 totalpages 미쳤다 이거구나 page 진짜 이거 익히는데 앛미10시부터 오후 4시꺼자.. 20210516 뭔지 감이온다!
@@ -70,7 +75,9 @@ public class controller {
     public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
         vo.sethit(vo.gethit()+1);//신기하네 함수로 빼니까 왜안되는거냐
-        System.out.println("hit"+vo.gethit());
+       
+        String tile=commentdao.findByTitle2();
+        model.addAttribute("title", tile);
         model.addAttribute("array", vo);
         return "content";
     }
