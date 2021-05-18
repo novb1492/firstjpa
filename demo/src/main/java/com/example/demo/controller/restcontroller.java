@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
+import com.example.demo.commentdao.commentdao;
+import com.example.demo.commentvo.commentvo;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
 
@@ -23,6 +25,8 @@ public class restcontroller {
     private userdao userdao;
     @Autowired
     private boarddao boarddao;
+    @Autowired
+    private commentdao commentdao;
 
     @PostMapping("comfirm")
     public String checkemail(@RequestParam("email")String email) {
@@ -83,6 +87,20 @@ public class restcontroller {
            e.printStackTrace();
         }
         return "no";
+        
+    }
+    @PostMapping("insertcomment")
+    public String insertcomment(HttpSession session,@RequestParam("comment")String comment,@RequestParam("bid")int bid) {
+
+        System.out.println(session.getAttribute("email"));
+        System.out.println(bid);
+        System.out.println(comment);
+        commentvo vo=new commentvo();
+        vo.setBid(bid);
+        vo.setComment(comment);
+        vo.setEmail((String)session.getAttribute("email"));
+        commentdao.save(vo);
+        return "yes";
         
     }
 }

@@ -69,8 +69,8 @@ public class controller {
     @Transactional
     public String content(HttpSession session,@RequestParam("bid")int bid,Model model) {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
-        vo.sethit(vo.gethit()+1);
-        System.out.println("hit"+vo.gethit());//신기하네 함수로 빼니까 왜안되는거냐
+        vo.sethit(vo.gethit()+1);//신기하네 함수로 빼니까 왜안되는거냐
+        System.out.println("hit"+vo.gethit());
         model.addAttribute("array", vo);
         return "content";
     }
@@ -90,7 +90,11 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
-
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "boardlist";
+    }
     private Page<boardvo> paging(int currentpage) {
 
         return boarddao.findAll(PageRequest.of(currentpage-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
