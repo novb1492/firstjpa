@@ -3,20 +3,35 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
+import com.example.demo.boarddao.boarddao;
+import com.example.demo.boradvo.boardvo;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service
 public class boardservice implements iboardservice {
     
- 
+    @Autowired
+    private boarddao boarddao;
 
-    public boardservice(){}
+
 
     @Override
-    public void getkim() throws Exception {
+    public int getkim(int pagenum)  {
 
-        System.out.println("pagessssssssssssss");
+       return 1;
+    }
+
+
+
+    @Override
+    public List<boardvo> getarticles() throws Exception {
+        
+        List<boardvo>array=boarddao.findByallusebid();
+        return array;
     }
 
    

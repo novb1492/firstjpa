@@ -90,17 +90,10 @@ public class restcontroller {
         
     }
     @PostMapping("insertcomment")
-    public String insertcomment(HttpSession session,@RequestParam("comment")String comment,@RequestParam("bid")int bid) {
-
-        System.out.println(session.getAttribute("email"));
-        System.out.println(bid);
-        System.out.println(comment);
-        commentvo vo=new commentvo();
-        vo.setBid(bid);
-        vo.setComment(comment);
-        vo.setEmail((String)session.getAttribute("email"));
-        commentdao.save(vo);
-        return "yes";
-        
+    public void insertcomment(@RequestParam(value = "bid",required=false)int bid,HttpSession session) {
+        commentvo commentvo=new commentvo();
+        commentvo.setBid((Integer)bid);
+        commentvo.setEmail((String)session.getAttribute("email"));
+        System.out.println(commentvo.getBid()+(String)session.getAttribute("email"));
     }
 }

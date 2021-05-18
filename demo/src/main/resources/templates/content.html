@@ -9,6 +9,7 @@
     <title>Document</title>
 </head>
 <body>
+    <input hidden="bidnumber" th:value="${bidnumber}"th:text="${bidnumber}">
     <a href="index">홈</a>
     <a href="boardlist">게시판</a>
     <div th:text="${session.email}" ></div>
@@ -37,6 +38,7 @@
         </div>
     </p>
 </div>
+
     <p>
     댓글
     <div id="errormessege"></div>
@@ -45,12 +47,6 @@
     <input type="button" id="button" value="완료">
     </div>
     </p>
-  
-    <div th:each="list : ${title}">
-        <div th:text="${'작성자'+'&nbsp'+list.getEmail}"></div>
-        <div th:text="${'내용'+'&nbsp'+list.getComment}"></div>
-    </div>
- 
     <script>
 $(function()
 {
@@ -78,10 +74,23 @@ $(function()
                 type:"post",
                 url:"insertcomment",
                 data:{
-                "bid":$('#bid').val(),
+                'bid':$('#bidnumber').val(),
                 "comment":$('#comment').val()
                 },
+                success:function(data){
+              console.log(data);
+              if($.trim(data)=="yes")
+              {
+              
+                location.href="content?bid="+$('#bbid').val();
+              }
+              else
+              {
+                alert('너무길거나 빈칸입니다');
+              }    
+            }
                 })
+                
             }
         })
 
