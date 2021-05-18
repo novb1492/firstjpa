@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -76,8 +78,8 @@ public class controller {
         boardvo vo=boarddao.findById(bid).orElseThrow(null);
         vo.sethit(vo.gethit()+1);//신기하네 함수로 빼니까 왜안되는거냐
        
-        String tile=commentdao.findByTitle2();
-        model.addAttribute("title", tile);
+        List<commentvo> commentvo=commentdao.findByTitle2(8);
+        model.addAttribute("title", commentvo);
         model.addAttribute("array", vo);
         return "content";
     }
