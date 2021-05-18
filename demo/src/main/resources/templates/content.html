@@ -27,38 +27,45 @@
                 </div>
             댓글
             <div th:if="${session.email!=null}">
-                <input type="text" id=comment name="comment">
+                <input type="text" id=comment name="comment"><!--본문-->
                 <input type="hidden" id="bid" name="bid" th:value="${vo.getbid}">
                 <input type="button" id="button" value="완료">
             </div>
     </div>
     <div th:each="comment : ${array}">
-    작성자  <div th:text="${comment.getEmail}"></div>
-    내용    <div th:text="${comment.getComment}"></div>
+            작성자  <div th:text="${comment.getEmail}"></div>
+            내용    <div th:text="${comment.getComment}"></div>
+        <div th:if="${session.email==comment.getEmail}">
+                <input type="button"value="수정">
+                <input type="button"value="삭제">
+        </div>
     </div>
 
     
 
 <script>
 $(function()
-{$('#button').click(function(){
-    $.ajax({
-        type:"post",
-        url:"insertcomment",
-        data:{
-              "bid":$('#bid').val(),
-              "comment":$('#comment').val()
-        },
-        success:function(data){
-    if($.trim(data)=="yes")
-    {
-    location.href="content?bid="+$('#bid').val();
-    }
-    else
-    {
-    alert('빈칸이 있거나 글자수가 초과합니다');
-    }}
-    })
+{
+
+    $('#button').click(function(){
+        $.ajax({
+            type:"post",
+            url:"insertcomment",
+            data:{
+                "bid":$('#bid').val(),
+                "comment":$('#comment').val()
+            },
+            success:function(data){
+            if(data=="yes")
+            {
+                location.href="content?bid="+$('#bid').val();
+            }
+            else if(data=="no");
+            {
+                alert('빈칸이 있거나 글자수가 초과합니다');
+            }
+        }
+        })
     })
     
 })
