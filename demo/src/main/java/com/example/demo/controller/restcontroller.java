@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
@@ -90,10 +91,15 @@ public class restcontroller {
         
     }
     @PostMapping("insertcomment")
-    public void insertcomment(@RequestParam(value = "bid",required=false)int bid,HttpSession session) {
-        commentvo commentvo=new commentvo();
-        commentvo.setBid((Integer)bid);
-        commentvo.setEmail((String)session.getAttribute("email"));
-        System.out.println(commentvo.getBid()+(String)session.getAttribute("email"));
+    public String insertcomment(HttpSession session,@RequestParam(value = "bid")int bid,@RequestParam("comment")String comment) {
+    
+        commentvo vo=new commentvo();
+        vo.setComment(comment);
+        vo.setBid(bid);
+        vo.setEmail((String)session.getAttribute("email"));
+        System.out.println(bid+comment+(String)session.getAttribute("email"));
+        commentdao.save(vo);
+        return "yes";
     }
+
 }
