@@ -60,7 +60,7 @@ public class restcontroller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "null";
+        return "no";
     }
     @PostMapping("writearticleprocess")
     public String writearticleprocess(HttpSession session,boardvo vo) {
@@ -92,24 +92,23 @@ public class restcontroller {
     }
     @PostMapping("insertcomment")
     public String insertcomment(HttpSession session,@RequestParam(value = "bid")int bid,@RequestParam("comment")String comment) {
-        String r="no";
-    try {
-        
-        commentvo vo=new commentvo();
-        vo.setComment(comment);
-        vo.setBid(bid);
-        vo.setEmail((String)session.getAttribute("email"));
-        System.out.println(bid+comment+(String)session.getAttribute("email"));
-        commentdao.save(vo);
-        r="yes";
-        System.out.println(r);
-        return r;
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println(r);
-        return r;
+        String r="yes";
+        try {
+            commentvo vo=new commentvo();
+            vo.setComment(comment);
+            vo.setBid(bid);
+            vo.setEmail((String)session.getAttribute("email"));
+            System.out.println(bid+comment+(String)session.getAttribute("email"));
+            commentdao.save(vo);
+            r="yes";
+            System.out.println(r);
+            return r;
+            
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(r);
+            return r;
+        } 
     }
-    }
-
 }

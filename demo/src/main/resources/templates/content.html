@@ -66,11 +66,11 @@ $(function()
                 "comment":$('#comment').val()
             },
             success:function(data){
-            if(data=="yes")
+            if($.trim(data)=="yes")
             {
                 location.href="content?bid="+$('#bid').val();
             }
-            else if(data=="no");
+            else if($.trim(data)=="no");
             {
                 alert('빈칸이 있거나 글자수가 초과합니다');
             }
