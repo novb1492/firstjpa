@@ -25,9 +25,10 @@
                     <input type="submit" id="delete" value="삭제">
                 </form>
                 </div>
+                <div id="errorcomment"></div>  
             댓글
             <div th:if="${session.email!=null}">
-                <input type="text" id=comment name="comment"><!--본문-->
+                <input type="text" id="comment" name="comment"><!--본문-->
                 <input type="hidden" id="bid" name="bid" th:value="${vo.getbid}">
                 <input type="button" id="button" value="완료">
             </div>
@@ -46,7 +47,16 @@
 <script>
 $(function()
 {
-
+    $('#comment').keyup(function(){
+        if( $('#comment').val().length>50)
+        {
+            $('#comment').css('background-color','pink');
+        }
+        else
+        {
+            $('#comment').css('background-color','white');
+        }
+    })
     $('#button').click(function(){
         $.ajax({
             type:"post",
