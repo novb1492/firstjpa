@@ -85,7 +85,7 @@ public class controller {
         model.addAttribute("array", array);
         return "boardlist";
     }
-    @GetMapping("writearticle")
+    @GetMapping("/writearticle")
     public String writeartticle(HttpSession session) {
         return "writearticle";   
     }
@@ -127,8 +127,10 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
-
- 
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+    }
     
  
 

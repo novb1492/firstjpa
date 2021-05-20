@@ -44,10 +44,16 @@ public class security extends WebSecurityConfigurerAdapter {
             .permitAll()///허용한다
             .anyRequest()///다른요청들은 
             .authenticated()////막는다
-            .and()//그리고
-            .formLogin()///로그인창으로 안내해준다
+        .and()//그리고
+        .formLogin()///로그인창으로 안내해준다
             .loginPage("/auth/loginpage")///내가만든 로그인창으로
             .loginProcessingUrl("/auth/loginprocess")/////시큐리티가 로그인가로챈다 그리고 넣은 주소로 넣어준다
-            .defaultSuccessUrl("/auth/boardlist");///성공한다면 여기
+            .defaultSuccessUrl("/auth/boardlist")
+        .and() 
+            .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/auth/boardlist");///성공한다면 여기
+            //////////링크 앞에 항상 /붙여야함
+            
     }
 }
