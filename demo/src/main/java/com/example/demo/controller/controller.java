@@ -17,6 +17,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,9 +71,14 @@ public class controller {
         return "index";
     }
     @GetMapping("/auth/boardlist")
-    public String boardlist(Model model,@RequestParam(value="page", defaultValue = "1") int pageNum,uservo uservo) {
+    public String boardlist(HttpSession session,Model model,@RequestParam(value="page", defaultValue = "1") int pageNum,uservo uservo) {
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=(UserDetails)principal;
+        String email=userDetails.getUsername();
+        session.setAttribute("email", email);////////////////////////////////이렇게 4줄이 시큐리티 값을 꺼내오는 것이다 한참 고생했다 ㅠㅠ 20210520
+     
         Page<boardvo>array=boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
-       model.addAttribute("pages", array.getTotalPages());
+        model.addAttribute("pages", array.getTotalPages());
         model.addAttribute("array", array);
         return "boardlist";
     }
@@ -117,7 +124,6 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
-
 
  
     

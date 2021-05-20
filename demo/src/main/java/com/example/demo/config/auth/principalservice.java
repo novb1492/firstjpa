@@ -20,11 +20,8 @@ public class principalservice implements UserDetailsService{
     //email 이 db에있나 확인
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //username="kim80800@daum.net";
-
-        
         System.out.println("username"+username);
-      uservo uservo =userdao.findByIdlogin(username);
+        uservo uservo =userdao.findByIdlogin(username);
         return new principaldetail(uservo);///////////세션에 유저정보가 저장됨
     }
 

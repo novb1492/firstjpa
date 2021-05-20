@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div th:if="${session.getemail==null}"><!--세션을 이렇게 model로 안넘겨도 그냥 바로 꺼내쓸수 있다 20210515 편리하다-->
+    <div th:if="${session.email==null}"><!--세션을 이렇게 model로 안넘겨도 그냥 바로 꺼내쓸수 있다 20210515 편리하다-->
         <a href="joinpage">회원가입</a>
         <a href="loginpage">로그인</a>
     </div>
@@ -29,7 +29,7 @@
     </tr>
     <tr th:each="list : ${array}">
         <td th:text="${list.getbid}"></td>
-        <td ><a th:href="@{/auth/content(bid=${list.getbid})}" th:text="${list.gettitle}"></a></td> <!--후아 th 진짜 jspl에비해 쓰레기다 진짜 링크거는것도 찾는라 힘들었네 웃기네20210516-->
+        <td ><a th:href="@{content(bid=${list.getbid})}" th:text="${list.gettitle}"></a></td> <!--후아 th 진짜 jspl에비해 쓰레기다 진짜 링크거는것도 찾는라 힘들었네 웃기네20210516-->
         <td th:text="${list.getemail}"></td>
         <td th:text="${list.getcreated}"></td>
         <td th:text="${list.gethit}"></td>
