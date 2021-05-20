@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,8 @@ public class controller {
     @Autowired
     private commentdao commentdao;
 
+    private final int commentpaging=3;
+
     @GetMapping("joinpage")
     public String join() {
         return "joinpage";
@@ -74,9 +77,32 @@ public class controller {
         return "writearticle";   
     }
     @GetMapping("content")
-    public String content(@RequestParam("bid")int bid,Model model) {
+    public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
         boardvo vo=boarddao.findById(bid).orElseThrow();
-        List<commentvo>array=commentdao.findByonebyone(bid);
+   
+        int count=commentdao.findallcountbyid(bid);
+        int totalpages=count/commentpaging;
+        if(count%3>0)
+        {
+            totalpages++;
+        }
+        List<commentvo>array=null;
+        if(totalpages>0)
+        {
+        int fisrt=(currentpage-1)*commentpaging+1;
+        int end=fisrt+commentpaging-1;
+        array=commentdao.findByonebyone(bid,fisrt-1,end-fisrt+1);
+        }
+        else
+        {
+            currentpage=0;
+            totalpages=0;
+        }
+        System.out.println("count"+count);
+        System.out.println("totalpages"+totalpages);
+
+        model.addAttribute("currentpage", currentpage);
+        model.addAttribute("lastpage", totalpages);
         model.addAttribute("array", array);
         model.addAttribute("boardvo", vo);
         return "content";
