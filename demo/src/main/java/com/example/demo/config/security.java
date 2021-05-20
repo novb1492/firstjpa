@@ -48,6 +48,6 @@ public class security extends WebSecurityConfigurerAdapter {
             .formLogin()///로그인창으로 안내해준다
             .loginPage("/auth/loginpage")///내가만든 로그인창으로
             .loginProcessingUrl("/auth/loginprocess")/////시큐리티가 로그인가로챈다 그리고 넣은 주소로 넣어준다
-            .defaultSuccessUrl("/");///성공한다면 여기
+            .defaultSuccessUrl("/auth/boardlist");///성공한다면 여기
     }
 }

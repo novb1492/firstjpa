@@ -28,7 +28,7 @@ public class principaldetail implements UserDetails{
     @Override
     public String getUsername() {
         // TODO Auto-generated method stub
-        return uservo.getName();
+        return uservo.getEmail();
     }
     ///꼐정이 만됴되지 않았는디 리턴한다(true만료안됨)
     @Override

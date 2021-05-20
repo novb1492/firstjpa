@@ -69,7 +69,7 @@ public class controller {
         return "index";
     }
     @GetMapping("/auth/boardlist")
-    public String boardlist(Model model,@RequestParam(value="page", defaultValue = "1") int pageNum) {
+    public String boardlist(Model model,@RequestParam(value="page", defaultValue = "1") int pageNum,uservo uservo) {
         Page<boardvo>array=boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
        model.addAttribute("pages", array.getTotalPages());
         model.addAttribute("array", array);
@@ -79,7 +79,7 @@ public class controller {
     public String writeartticle(HttpSession session) {
         return "writearticle";   
     }
-    @GetMapping("content")
+    @GetMapping("/auth/content")
     public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
         boardvo vo=boarddao.findById(bid).orElseThrow();
    
