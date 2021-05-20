@@ -1,18 +1,15 @@
 package com.example.demo.controller;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
-
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
-import com.example.demo.service.boardservice;
-import com.example.demo.service.iboardservice;
+import com.example.demo.config.security;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,20 +36,25 @@ public class controller {
     private boarddao boarddao;
     @Autowired
     private commentdao commentdao;
+    @Autowired
+    private security security;
 
     private final int commentpaging=3;
 
-    @GetMapping("joinpage")
+    @GetMapping("/auth/joinpage")
     public String join() {
         return "joinpage";
     }
-    @GetMapping("loginpage")
+    @GetMapping("/auth/loginpage")
     public String loginpage() {
         return "loginpage";
     }
-    @PostMapping("joinprocess")
+    @PostMapping("/auth/joinprocess")
     public String  joinprocess(uservo user) {   
         try {
+        BCryptPasswordEncoder encoder=security.encodepwd();
+        String hashpwd=encoder.encode(user.getpwd());
+        user.setpwd(hashpwd);
         userdao.save(user);
         return "loginpage";
        

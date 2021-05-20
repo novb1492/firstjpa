@@ -10,7 +10,7 @@
 <body>
   <a href="index">홈</a>  
 <br>
-    <form  id="target" action="joinprocess" method="post">
+    <form  id="target" action="/auth/joinprocess" method="post">
     이메일 <input type="email" name="email" id="useremail"  placeholder="이메일을 적어 주세요">                   
     <div id="emailcheck"></div>
     비밀번호<input id="userpwd" type="password" name="pwd" placeholder="10자 이상으로 입력해주세요">
@@ -47,7 +47,7 @@
         {
             $.ajax({
             type:"post",
-            url:"comfirm",
+            url:"/auth/comfirm",
             data:{
               "email":$('#useremail').val()
             },

@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
 
 import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
@@ -29,7 +29,7 @@ public class restcontroller {
     @Autowired
     private commentdao commentdao;
 
-    @PostMapping("comfirm")
+    @PostMapping("/auth/comfirm")
     public String checkemail(@RequestParam("email")String email) {
 
         System.out.println(email+"userid");
