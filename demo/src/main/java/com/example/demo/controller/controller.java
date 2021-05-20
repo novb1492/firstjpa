@@ -72,11 +72,14 @@ public class controller {
     }
     @GetMapping("/auth/boardlist")
     public String boardlist(HttpSession session,Model model,@RequestParam(value="page", defaultValue = "1") int pageNum,uservo uservo) {
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=(UserDetails)principal;
-        String email=userDetails.getUsername();
-        session.setAttribute("email", email);////////////////////////////////이렇게 4줄이 시큐리티 값을 꺼내오는 것이다 한참 고생했다 ㅠㅠ 20210520
-     
+        try {
+            Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails=(UserDetails)principal;
+            String email=userDetails.getUsername();
+            session.setAttribute("email", email);////////////////////////////////이렇게 4줄이 시큐리티 값을 꺼내오는 것이다 한참 고생했다 ㅠㅠ 20210520
+        } catch (Exception e) {///////////아 이럴때 트라이 캐치로 감싸면 잘넘어가는구나 
+            e.printStackTrace();
+        }
         Page<boardvo>array=boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
         model.addAttribute("pages", array.getTotalPages());
         model.addAttribute("array", array);
@@ -92,7 +95,7 @@ public class controller {
    
         int count=commentdao.findallcountbyid(bid);
         int totalpages=count/commentpaging;
-        if(count%3>0)
+        if(count%commentpaging>0)
         {
             totalpages++;
         }

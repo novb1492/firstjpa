@@ -61,7 +61,7 @@ public class restcontroller {
             e.printStackTrace();
         }
         return "no";
-    }*/
+    }*///이거는 시큐리티 혹은 해시없는 버전
     @PostMapping("writearticleprocess")
     public String writearticleprocess(HttpSession session,boardvo vo) {
         
