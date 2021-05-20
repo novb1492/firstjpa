@@ -37,23 +37,39 @@
     <div th:each="comment : ${array}">
             작성자  <div th:text="${comment.getEmail}"></div>
             내용    <div th:text="${comment.getComment}"></div>
-        <div th:if="${session.email==comment.getEmail}">
+            <div th:if="${session.email==comment.getEmail}">
                 <input type="button"value="수정">
                 <input type="button"value="삭제">
-        </div>
+            </div>    
+                    <div th:if="${session.email!=null}">
+
+                        <a href="#" id="replybutton">답글</a>
+                        <div id="reply"></div>
+                        <div id="canclereplybutton"></div>
+                    </div>
     </div>
-    <div th:if="${lastpage>0}">
-    <div th:with="vo= ${boardvo}" >
-        <div th:each="num: ${#numbers.sequence(1,lastpage)}">
-            <a th:href="@{content?(bid=${vo.getbid},page=${num})}">[[${num}]]</a><!--묻혀서 보내는것도 불편하구만 jstl에 비해-->
+        <div th:if="${lastpage>0}">
+        <div th:with="vo= ${boardvo}" >
+            <div th:each="num: ${#numbers.sequence(1,lastpage)}">
+                <a th:href="@{content?(bid=${vo.getbid},page=${num})}">[[${num}]]</a><!--묻혀서 보내는것도 불편하구만 jstl에 비해-->
+            </div>
         </div>
-    </div>
 </div>
     
 
 <script>
 $(function()
 {
+    $('#replybutton').click(function(){
+        $('#reply').html('<input type="text" id="writereply">');
+        $('#canclereplybutton').html('<input type="button" id="canclereply" value="취소">');
+    })
+    $('#canclereply').click(function(){
+        $('#reply').remove();
+        $('#canclereplybutton').remove();
+        $('#writereply').remove();
+        $('#canclereply').remove();
+    })
     $('#comment').keyup(function(){
         if( $('#comment').val().length>50)
         {
