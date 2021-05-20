@@ -63,12 +63,12 @@ public class controller {
         }
         return "joinpage";
     }
-    @GetMapping("index")
+    @GetMapping("/auth/index")
     public String index(HttpSession session)   
     {
         return "index";
     }
-    @GetMapping("boardlist")
+    @GetMapping("/auth/boardlist")
     public String boardlist(Model model,@RequestParam(value="page", defaultValue = "1") int pageNum) {
         Page<boardvo>array=boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
        model.addAttribute("pages", array.getTotalPages());

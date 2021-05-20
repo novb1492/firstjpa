@@ -42,7 +42,7 @@ public class restcontroller {
         return "no";
     }
 
-    @PostMapping("loginprocess")
+    /*@PostMapping("/auth/loginprocess")
     public String loginprocess(HttpSession session,@RequestParam("email")String email,@RequestParam("pwd")String pwd) {
         try {
             uservo user=userdao.findById(email).orElseThrow(()->{
@@ -61,7 +61,7 @@ public class restcontroller {
             e.printStackTrace();
         }
         return "no";
-    }
+    }*/
     @PostMapping("writearticleprocess")
     public String writearticleprocess(HttpSession session,boardvo vo) {
         

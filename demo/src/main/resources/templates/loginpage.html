@@ -10,50 +10,12 @@
 <body>
     <a href="index">홈</a>
 <br>
-  <form>
-      email:<input type="email" id="useremail" name="id" placeholder="">
+  <form action="/auth/loginprocess" method="post">
+      email:<input type="email"  name="username" placeholder=""><!--스프링 시큐리티 기본값 username =로해야 해시 풀떄 풀수 있다 젠장 20210520-->
       <br>
-      pwd:<input type="password" id="userpwd" name="pwd" placeholder="write pwd">
+      pwd:<input type="password" name="password" placeholder="write pwd">
+      <br>
+      <input type="submit" value="로그인" >
   </form>
-  <br>
-  <input type="button" value="로그인" id="button">
-
-  <script>
-$(function(){
-
-    $('#button').click(function(){
-        $.ajax({
-            type:"post",
-            url:"loginprocess",
-            data:{
-              "email":$('#useremail').val(),
-              "pwd":$('#userpwd').val(),
-            },
-            success:function(data){
-
-              if($.trim(data)=="yes")
-              {
-                location.href="boardlist";
-              }
-              else if($.trim(data)=="wrongpwd")
-              {
-                alert('비밀번호가 틀립니다');
-              } 
-              else
-              {
-                alert('일치하는 이메일이 없습니다');
-              }   
-            }
-
-        })
-
-    })
-
-
-
-})
-
-  </script>
-
 </body>
 </html>

@@ -1,7 +1,12 @@
 package com.example.demo.config;
 
+import com.example.demo.config.auth.principaldetail;
+import com.example.demo.config.auth.principalservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,9 +18,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)//특정 주소 접근을 미리체크 한다  이3개는 셋트임 20210520
 public class security extends WebSecurityConfigurerAdapter {
     
+    @Autowired
+    private principalservice principalservice;
+    
     @Bean
     public BCryptPasswordEncoder encodepwd() {
         return new BCryptPasswordEncoder();
+    }
+
+    //비밀번호를 가로채서
+    //해당 pwd가 뭘로 해시되어있나 알아내야함
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(principalservice).passwordEncoder(encodepwd());///암호화 해준애가 얘라고 알려줘야함
     }
 
     @Override
@@ -30,6 +46,8 @@ public class security extends WebSecurityConfigurerAdapter {
             .authenticated()////막는다
             .and()//그리고
             .formLogin()///로그인창으로 안내해준다
-            .loginPage("/auth/loginpage");///내가만든 로그인창으로
+            .loginPage("/auth/loginpage")///내가만든 로그인창으로
+            .loginProcessingUrl("/auth/loginprocess")/////시큐리티가 로그인가로챈다 그리고 넣은 주소로 넣어준다
+            .defaultSuccessUrl("/");///성공한다면 여기
     }
 }
