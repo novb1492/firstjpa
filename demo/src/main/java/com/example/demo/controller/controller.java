@@ -10,7 +10,7 @@ import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
-import com.example.demo.config.manager;
+
 import com.example.demo.config.security;
 import com.example.demo.kakaovo.kakaovo;
 import com.example.demo.oauthtoken.oauthtoken;
@@ -60,7 +60,7 @@ public class controller {
     @Autowired
     private security security;
     @Autowired
-    manager manager;
+    private AuthenticationManager authenticationManager;
     
 
     private final int commentpaging=3;
@@ -179,7 +179,7 @@ public class controller {
         return "mypage";
     }
     @GetMapping(value="/auth/kakao/callback")
-    public @ResponseBody String kakaologin(String code,HttpSession session) {/////코드를 받으면 인증성공 그다음 토크을 받아야함
+    public String kakaologin(String code,HttpSession session) {/////코드를 받으면 인증성공 그다음 토크을 받아야함
         RestTemplate restTemplate=new RestTemplate();
         ////httpheader오브젝트생성
         HttpHeaders headers=new HttpHeaders();///spring framwork로 선택해라
@@ -251,15 +251,14 @@ public class controller {
          uservo.setpwd(coskey);
          userdao.save(uservo);
             try {
-                 manager=new manager();
-                AuthenticationManager authenticationManager = manager.authenticationManagerBean();
                 Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
-                SecurityContextHolder.getContext().setAuthentication(authentication);///여기서부터는 내일하자 
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                session.setAttribute("email", uservo.getEmail());
             } catch (Exception e) {
                 e.printStackTrace();
             }
     
-        return responseEntity2.getBody();
+        return "redirect:/";
     }
     
  
