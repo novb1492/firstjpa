@@ -10,12 +10,12 @@ import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
+import com.example.demo.config.manager;
 import com.example.demo.config.security;
 import com.example.demo.kakaovo.kakaovo;
 import com.example.demo.oauthtoken.oauthtoken;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,8 +59,7 @@ public class controller {
     private commentdao commentdao;
     @Autowired
     private security security;
-    @Autowired
-    AuthenticationManager authenticationManager;
+    
 
     private final int commentpaging=3;
 
@@ -249,9 +248,15 @@ public class controller {
          uservo.setName(kakaovo.getProperties().getNickname());
          uservo.setpwd(coskey);
          userdao.save(uservo);
-
-          Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
-          SecurityContextHolder.getContext().setAuthentication(authentication);///여기서부터는 내일하자 
+            try {
+                manager manager=new manager();
+                AuthenticationManager authenticationManager = manager.authenticationManagerBean();
+                Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
+                SecurityContextHolder.getContext().setAuthentication(authentication);///여기서부터는 내일하자 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    
         return responseEntity2.getBody();
     }
     
