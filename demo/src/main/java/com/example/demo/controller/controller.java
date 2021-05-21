@@ -254,6 +254,7 @@ public class controller {
                 Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 session.setAttribute("email", uservo.getEmail());
+                System.out.println(uservo.getEmail()+"email");
             } catch (Exception e) {
                 e.printStackTrace();
             }
