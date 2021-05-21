@@ -59,6 +59,8 @@ public class controller {
     private commentdao commentdao;
     @Autowired
     private security security;
+    @Autowired
+    manager manager;
     
 
     private final int commentpaging=3;
@@ -249,7 +251,7 @@ public class controller {
          uservo.setpwd(coskey);
          userdao.save(uservo);
             try {
-                manager manager=new manager();
+                 manager=new manager();
                 AuthenticationManager authenticationManager = manager.authenticationManagerBean();
                 Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
                 SecurityContextHolder.getContext().setAuthentication(authentication);///여기서부터는 내일하자 
