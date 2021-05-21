@@ -14,5 +14,8 @@ public interface userdao extends JpaRepository<uservo,String> {
     
     @Query(value = "select *from members  where email=?1 ",nativeQuery = true)
     uservo findByIdlogin(String email);
+
+    @Query(value = "select pwd from members  where email=?1 ",nativeQuery = true)
+    String findpwdById(String email);
 }
 

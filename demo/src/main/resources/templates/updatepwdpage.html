@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmln:th="http://www.thymeleaf.org"></html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,9 @@
     <title>Document</title>
 </head>
 <body>
-    
+   <form action="/updatepwdprocess" method="POST">
+    <input type="password" name="pwd" placeholder="현재 비밀번호를 입력해 주세요">
+    <input type="submit" value="완료">
+   </form> 
 </body>
 </html>

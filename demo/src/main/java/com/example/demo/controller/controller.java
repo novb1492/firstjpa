@@ -130,11 +130,32 @@ public class controller {
         model.addAttribute("boardvo", vo);
         return "updatecontent";
     }
-    @GetMapping("/mypage")
-    public String mypage() {
+    @GetMapping("mypage")
+    public String mypage(Model model) {
+      
         return "mypage";
     }
-    
+    @GetMapping("updatepwdpage")
+    public String updatepwdpage() {
+        return "updatepwdpage";
+    }
+    @PostMapping("updatepwdprocess")
+    public String updatepwdprocess(@RequestParam("pwd")String pwd,HttpSession session) {
+        String pwd2=userdao.findpwdById((String)session.getAttribute("email"));
+        System.out.println(pwd2);
+        try {
+            BCryptPasswordEncoder encoder=security.encodepwd();
+            if(encoder.matches(pwd, pwd2)){////오 이걸로 깔끔하게 비교가 된다 그러면로그인도 이걸로 하겠는데....?20200521
+                System.out.println("success");
+            }
+           else{
+            System.out.println("fail");
+           }
+            } catch (DataAccessException e) {
+             e.printStackTrace();
+            }
+        return "mypage";
+    }
  
 
 }
