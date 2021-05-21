@@ -10,21 +10,35 @@ import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
 import com.example.demo.config.security;
+import com.example.demo.oauthtoken.oauthtoken;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 
 
@@ -156,6 +170,45 @@ public class controller {
             }
         return "mypage";
     }
+    @GetMapping(value="/auth/kakao/callback")
+    public @ResponseBody String kakaologin(String code) {/////코드를 받으면 인증성공 그다음 토크을 받아야함
+        RestTemplate restTemplate=new RestTemplate();
+        ////httpheader오브젝트생성
+        HttpHeaders headers=new HttpHeaders();///spring framwork로 선택해라
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        ///httpbody오브젝트생성
+        MultiValueMap<String,String>params=new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", "754f0d96ccb805a7da1f4c7fcc5fe1f7");
+        params.add("redirect_uri", "http://localhost:8080/auth/kakao/callback");
+        params.add("code", code);
+        ///header&body한곳에 넣기
+        HttpEntity<MultiValueMap<String,String>> kakaorequest=new HttpEntity<>(params,headers);
+
+        ///http요청하기 
+        ResponseEntity responseEntity=restTemplate.exchange(
+           "https://kauth.kakao.com/oauth/token",//요청주소
+           HttpMethod.POST,//방식
+           kakaorequest,//객체
+           String.class //답변형식
+         );///진짜 별개다되네20200521
+
+         ObjectMapper objectMapper=new ObjectMapper();
+         oauthtoken oauth=null;
+         try {
+
+        oauth=objectMapper.readValue(responseEntity.getBody(),oauthtoken.class);
+         } catch (JsonMappingException e) {
+           e.printStackTrace();
+         }
+         catch(JsonProcessingException e){
+            e.printStackTrace();
+         }
+    oauth.getAccess_token();
+         
+        return "yes"+responseEntity.getBody();
+    }
+    
  
 
 }
