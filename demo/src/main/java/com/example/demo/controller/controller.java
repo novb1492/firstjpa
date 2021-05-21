@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 import com.example.demo.boarddao.boarddao;
@@ -28,6 +29,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,6 +59,8 @@ public class controller {
     private commentdao commentdao;
     @Autowired
     private security security;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     private final int commentpaging=3;
 
@@ -172,7 +178,7 @@ public class controller {
         return "mypage";
     }
     @GetMapping(value="/auth/kakao/callback")
-    public @ResponseBody String kakaologin(String code) {/////코드를 받으면 인증성공 그다음 토크을 받아야함
+    public @ResponseBody String kakaologin(String code,HttpSession session) {/////코드를 받으면 인증성공 그다음 토크을 받아야함
         RestTemplate restTemplate=new RestTemplate();
         ////httpheader오브젝트생성
         HttpHeaders headers=new HttpHeaders();///spring framwork로 선택해라
@@ -236,7 +242,16 @@ public class controller {
          }
         System.out.println(kakaovo.getKakao_account().getEmail());
        
-         
+    
+         String coskey="1111";
+         uservo uservo=new uservo();
+         uservo.setEmail(kakaovo.getKakao_account().getEmail());
+         uservo.setName(kakaovo.getProperties().getNickname());
+         uservo.setpwd(coskey);
+         userdao.save(uservo);
+
+          Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
+          SecurityContextHolder.getContext().setAuthentication(authentication);///여기서부터는 내일하자 
         return responseEntity2.getBody();
     }
     
