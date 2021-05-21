@@ -10,6 +10,7 @@ import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
 import com.example.demo.config.security;
+import com.example.demo.kakaovo.kakaovo;
 import com.example.demo.oauthtoken.oauthtoken;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
@@ -186,7 +187,7 @@ public class controller {
         HttpEntity<MultiValueMap<String,String>> kakaorequest=new HttpEntity<>(params,headers);
 
         ///http요청하기 
-        ResponseEntity responseEntity=restTemplate.exchange(
+        ResponseEntity<String> responseEntity=restTemplate.exchange(///string 제너릭 넣으래잖아 제발 준영아
            "https://kauth.kakao.com/oauth/token",//요청주소
            HttpMethod.POST,//방식
            kakaorequest,//객체
@@ -196,7 +197,6 @@ public class controller {
          ObjectMapper objectMapper=new ObjectMapper();
          oauthtoken oauth=null;
          try {
-
         oauth=objectMapper.readValue(responseEntity.getBody(),oauthtoken.class);
          } catch (JsonMappingException e) {
            e.printStackTrace();
@@ -204,9 +204,40 @@ public class controller {
          catch(JsonProcessingException e){
             e.printStackTrace();
          }
-    oauth.getAccess_token();
+        System.out.println(oauth.getAccess_token());
+
+
+        RestTemplate restTemplate2=new RestTemplate();
+        ////httpheader오브젝트생성
+        HttpHeaders headers2=new HttpHeaders();///spring framwork로 선택해라
+        headers2.add("Authorization","Bearer "+oauth.getAccess_token());
+        headers2.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+    
+        HttpEntity<MultiValueMap<String,String>> kakaorequest2=new HttpEntity<>(headers2);
+
+        ///http요청하기 
+        ResponseEntity<String> responseEntity2=restTemplate2.exchange(///string 제너릭 넣으래잖아 제발 준영아
+           "https://kapi.kakao.com/v2/user/me",//요청주소 하 카카오는 https다 준영아 제발 20210521
+           HttpMethod.POST,//방식
+           kakaorequest2,//객체
+           String.class //답변형식
+         );///진짜 별개다되네20200521
+
+         ObjectMapper objectMapper2=new ObjectMapper();
+
+         kakaovo kakaovo=new kakaovo();
+         try {
+        kakaovo =objectMapper2.readValue(responseEntity2.getBody(),kakaovo.class);
+         } catch (JsonMappingException e) {
+           e.printStackTrace();
+         }
+         catch(JsonProcessingException e){
+            e.printStackTrace();
+         }
+        System.out.println(kakaovo.getKakao_account().getEmail());
+       
          
-        return "yes"+responseEntity.getBody();
+        return responseEntity2.getBody();
     }
     
  
