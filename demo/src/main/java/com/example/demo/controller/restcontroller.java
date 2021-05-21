@@ -94,12 +94,12 @@ public class restcontroller {
     public String insertcomment(HttpSession session,@RequestParam(value = "bid")int bid,@RequestParam("comment")String comment) {
         String r="yes";
         try {
-            commentvo vo=new commentvo();
-            vo.setComment(comment);
-            vo.setBid(bid);
-            vo.setEmail((String)session.getAttribute("email"));
+            commentvo commentvo=new commentvo();
+            commentvo.setcomment(comment);
+            commentvo.setemail((String)session.getAttribute("email"));
+            commentvo.setbid(bid);
             System.out.println(bid+comment+(String)session.getAttribute("email"));
-            commentdao.save(vo);
+            commentdao.save(commentvo);
             r="yes";
             System.out.println(r);
             return r;

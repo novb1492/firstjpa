@@ -21,37 +21,31 @@ public class principaldetail implements UserDetails{
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
         return uservo.getpwd();
     }
 
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return uservo.getEmail();
     }
     ///꼐정이 만됴되지 않았는디 리턴한다(true만료안됨)
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return true;
     }
-//꼐정이 잠겨있는지 리턴한다(true잠기지 않음)
+    //꼐정이 잠겨있는지 리턴한다(true잠기지 않음)
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return true;
     }
-//비밀번호 만됴되지 않았는디 리턴한다(true만료안됨)
+    //비밀번호 만됴되지 않았는디 리턴한다(true만료안됨)
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return true;
     }
     //꼐정이 활성화 되어있는지 않았는디 리턴한다(true활성화)
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return true;
     }
     //꼐정이 권한 리턴한다(true만료안됨)

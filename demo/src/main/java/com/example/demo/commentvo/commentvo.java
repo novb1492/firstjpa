@@ -13,7 +13,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 
-@Data
+
 @Entity
 @Table(name="comment")
 public class commentvo {
@@ -34,5 +34,25 @@ public class commentvo {
 
     @CreationTimestamp
     private Timestamp created;
+
+
+    public void setcomment (String comment) {
+        this.comment=comment;
+    }
+    public String getcomment() {
+        return this.comment;
+    }
+    public void setemail(String email) {
+        this.email=email;
+    }
+    public String getemail() {
+        return this.email;
+    }
+    public void setbid(int bid) {
+        this.bid=bid;
+    }
+    public int getbid() {
+        return this.bid;
+    }
     
 }

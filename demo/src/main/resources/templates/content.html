@@ -17,7 +17,7 @@
             내용
             <div th:text="${vo.getcontent}"></div>
             <div th:if="${session.email==vo.getemail}">
-                <form action="updatecontent">
+                <form action="/updatecontent">
                     <input type="hidden" id="bid" name="bid" th:value="${vo.getbid}">
                     <input type="submit" id="update" value="수정">
                 </form>
@@ -35,9 +35,9 @@
             </div>
     </div>
     <div th:each="comment : ${array}">
-            작성자  <div th:text="${comment.getEmail}"></div>
-            내용    <div th:text="${comment.getComment}"></div>
-            <div th:if="${session.email==comment.getEmail}">
+            작성자  <div th:text="${comment.getemail}"></div>
+            내용    <div th:text="${comment.getcomment}"></div>
+            <div th:if="${session.email==comment.getemail}">
                 <input type="button"value="수정">
                 <input type="button"value="삭제">
             </div>    
@@ -83,7 +83,7 @@ $(function()
     $('#button').click(function(){
         $.ajax({
             type:"post",
-            url:"insertcomment",
+            url:"/insertcomment",
             data:{
                 "bid":$('#bid').val(),
                 "comment":$('#comment').val()
@@ -91,7 +91,7 @@ $(function()
             success:function(data){
             if($.trim(data)=="yes")
             {
-                location.href="content?bid="+$('#bid').val();
+                location.href="/auth/content?bid="+$('#bid').val();
             }
         }
         })

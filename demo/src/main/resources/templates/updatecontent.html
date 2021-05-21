@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="index">홈</a>
+    <a href="/auth/index">홈</a>
     <br>
     <h1>글을 작성해주세요</h1>
     
@@ -59,7 +59,7 @@
             success:function(data){
                 if($.trim(data)=="yes")
                 {
-                location.href="boardlist";
+                location.href="/auth/boardlist";
                 }
                 else
                 {alert('문제가 생겼습니다');}       

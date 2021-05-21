@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.config.auth.principaldetail;
+
 import com.example.demo.config.auth.principalservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class security extends WebSecurityConfigurerAdapter {
     //비밀번호를 가로채서
     //해당 pwd가 뭘로 해시되어있나 알아내야함
 
-    @Override
+    @Override///로그인할때 받는 메소드 같다
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(principalservice).passwordEncoder(encodepwd());///암호화 해준애가 얘라고 알려줘야함
     }

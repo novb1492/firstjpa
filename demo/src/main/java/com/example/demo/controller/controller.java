@@ -91,20 +91,20 @@ public class controller {
     }
     @GetMapping("/auth/content")
     public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
-        boardvo vo=boarddao.findById(bid).orElseThrow();
-   
+        try {
+            boardvo vo=boarddao.findById(bid).orElseThrow();
         int count=commentdao.findallcountbyid(bid);
         int totalpages=count/commentpaging;
         if(count%commentpaging>0)
         {
             totalpages++;
         }
-        List<commentvo>array=null;
+        List<commentvo>commentarray=null;
         if(totalpages>0)
         {
         int fisrt=(currentpage-1)*commentpaging+1;
         int end=fisrt+commentpaging-1;
-        array=commentdao.findByonebyone(bid,fisrt-1,end-fisrt+1);
+        commentarray=commentdao.findByonebyone(bid,fisrt-1,end-fisrt+1);
         }
         else
         {
@@ -116,8 +116,11 @@ public class controller {
 
         model.addAttribute("currentpage", currentpage);
         model.addAttribute("lastpage", totalpages);
-        model.addAttribute("array", array);
+        model.addAttribute("array", commentarray);
         model.addAttribute("boardvo", vo);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
         return "content";
     }
     @GetMapping("updatecontent")
