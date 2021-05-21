@@ -146,7 +146,7 @@ public class controller {
         try {
             BCryptPasswordEncoder encoder=security.encodepwd();
             if(encoder.matches(pwd, pwd2)){////오 이걸로 깔끔하게 비교가 된다 그러면로그인도 이걸로 하겠는데....?20200521
-                System.out.println("success");
+                System.out.println("success");////왜 안되는지 알았다 시큐리티 빈에 등록이 되지 않아 말그대로 권한없이 로그인만 된다 20200521
             }
            else{
             System.out.println("fail");
