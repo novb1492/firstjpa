@@ -10,16 +10,15 @@ import com.example.demo.boarddao.boarddao;
 import com.example.demo.boradvo.boardvo;
 import com.example.demo.commentdao.commentdao;
 import com.example.demo.commentvo.commentvo;
-
 import com.example.demo.config.security;
 import com.example.demo.kakaovo.kakaovo;
 import com.example.demo.oauthtoken.oauthtoken;
+import com.example.demo.service.boardservice.boardservice;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -42,7 +41,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.client.RestTemplate;
 
 
@@ -61,6 +59,8 @@ public class controller {
     private security security;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private boardservice boardservice;
     
 
     private final int commentpaging=3;
@@ -102,7 +102,7 @@ public class controller {
         } catch (Exception e) {///////////아 이럴때 트라이 캐치로 감싸면 잘넘어가는구나 
             e.printStackTrace();
         }
-        Page<boardvo>array=boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
+        Page<boardvo>array=boardservice.getboardlist(pageNum);;///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
         model.addAttribute("pages", array.getTotalPages());
         model.addAttribute("array", array);
         return "boardlist";
@@ -247,7 +247,7 @@ public class controller {
         System.out.println();
        
     
-         String coskey="1111";
+         String coskey="1111";////관리잘해야함
          uservo uservo=new uservo();
          uservo.setEmail(kakaovo.kakao_account.email);////////////맥에서는 이렇게해야한다고??
          uservo.setName(kakaovo.kakao_account.profile.nickname);////엥 왜 맥에서는 이렇게 해야 되는거지??
