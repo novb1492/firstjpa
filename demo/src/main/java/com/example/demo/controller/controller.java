@@ -14,6 +14,7 @@ import com.example.demo.config.security;
 import com.example.demo.kakaovo.kakaovo;
 import com.example.demo.oauthtoken.oauthtoken;
 import com.example.demo.service.boardservice.boardservice;
+import com.example.demo.service.contentservice.contentservice;
 import com.example.demo.userdao.userdao;
 import com.example.demo.uservo.uservo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,8 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -61,6 +60,8 @@ public class controller {
     private AuthenticationManager authenticationManager;
     @Autowired
     private boardservice boardservice;
+    @Autowired
+    private contentservice contentservice;
     
 
     private final int commentpaging=3;
@@ -95,10 +96,7 @@ public class controller {
     @GetMapping("/auth/boardlist")
     public String boardlist(HttpSession session,Model model,@RequestParam(value="page", defaultValue = "1") int pageNum,uservo uservo) {
         try {
-            Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            UserDetails userDetails=(UserDetails)principal;
-            String email=userDetails.getUsername();
-            session.setAttribute("email", email);////////////////////////////////이렇게 4줄이 시큐리티 값을 꺼내오는 것이다 한참 고생했다 ㅠㅠ 20210520
+            session.setAttribute("email", boardservice.getsessionemail());////////////////////////////////이렇게 4줄이 시큐리티 값을 꺼내오는 것이다 한참 고생했다 ㅠㅠ 20210520
         } catch (Exception e) {///////////아 이럴때 트라이 캐치로 감싸면 잘넘어가는구나 
             e.printStackTrace();
         }
@@ -114,10 +112,7 @@ public class controller {
     @GetMapping("/auth/content")
     public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
         try {
-            boardvo vo=boarddao.findById(bid).orElseThrow();
-            vo.sethit(vo.gethit()+1);
-            boarddao.save(vo);///조회수 늘려주는 알고리즘 사라져서 다시 만듬!
-            
+            boardvo vo=contentservice.getcontent(bid); 
             int count=commentdao.findallcountbyid(bid);
             int totalpages=count/commentpaging;
             if(count%commentpaging>0)
