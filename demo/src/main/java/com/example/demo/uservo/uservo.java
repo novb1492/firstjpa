@@ -30,12 +30,23 @@ public class uservo {
     @Column(name="name",length = 20,nullable = false)
     private String name;
 
+    
     @Column(name="id",nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)///테이블은 여기서 만들고 mysql에서 오토인크리먼트하면된다
     private int id;
 
-    @CreationTimestamp
-    private Timestamp created;///이놈때매 테이블은 앞으로 여기서 만들어야겠다
+    @Column(name="created",nullable=false)
+    @CreationTimestamp  
+    private Timestamp created;
+
+    public Timestamp getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+    ///이놈때매 테이블은 앞으로 여기서 만들어야겠다
 
  
     public void setpwd(String pwd)

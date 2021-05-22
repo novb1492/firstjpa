@@ -115,31 +115,31 @@ public class controller {
     public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
         try {
             boardvo vo=boarddao.findById(bid).orElseThrow();
-        int count=commentdao.findallcountbyid(bid);
-        int totalpages=count/commentpaging;
-        if(count%commentpaging>0)
-        {
-            totalpages++;
-        }
-        List<commentvo>commentarray=null;
-        if(totalpages>0)
-        {
-        int fisrt=(currentpage-1)*commentpaging+1;
-        int end=fisrt+commentpaging-1;
-        commentarray=commentdao.findByonebyone(bid,fisrt-1,end-fisrt+1);
-        }
-        else
-        {
-            currentpage=0;
-            totalpages=0;
-        }
-        System.out.println("count"+count);
-        System.out.println("totalpages"+totalpages);
+            int count=commentdao.findallcountbyid(bid);
+            int totalpages=count/commentpaging;
+            if(count%commentpaging>0)
+            {
+                totalpages++;
+            }
+            List<commentvo>commentarray=null;
+            if(totalpages>0)
+            {
+            int fisrt=(currentpage-1)*commentpaging+1;
+            int end=fisrt+commentpaging-1;
+            commentarray=commentdao.findByonebyone(bid,fisrt-1,end-fisrt+1);
+            }
+            else
+            {
+                currentpage=0;
+                totalpages=0;
+            }
+            System.out.println("count"+count);
+            System.out.println("totalpages"+totalpages);
 
-        model.addAttribute("currentpage", currentpage);
-        model.addAttribute("lastpage", totalpages);
-        model.addAttribute("array", commentarray);
-        model.addAttribute("boardvo", vo);
+            model.addAttribute("currentpage", currentpage);
+            model.addAttribute("lastpage", totalpages);
+            model.addAttribute("array", commentarray);
+            model.addAttribute("boardvo", vo);
         } catch (Exception e) {
            e.printStackTrace();
         }
@@ -234,22 +234,22 @@ public class controller {
 
          kakaovo kakaovo=new kakaovo();
          try {
-        kakaovo =objectMapper2.readValue(responseEntity2.getBody(),kakaovo.class);
+        kakaovo=objectMapper2.readValue(responseEntity2.getBody(),kakaovo.class);
          } catch (JsonMappingException e) {
            e.printStackTrace();
          }
          catch(JsonProcessingException e){
             e.printStackTrace();
          }
-        System.out.println(kakaovo.getKakao_account().getEmail());
+        System.out.println();
        
     
          String coskey="1111";
          uservo uservo=new uservo();
-         uservo.setEmail(kakaovo.getKakao_account().getEmail());
-         uservo.setName(kakaovo.getProperties().getNickname());
+         uservo.setEmail(kakaovo.kakao_account.email);////////////맥에서는 이렇게해야한다고??
+         uservo.setName(kakaovo.kakao_account.profile.nickname);////엥 왜 맥에서는 이렇게 해야 되는거지??
          uservo.setpwd(coskey);
-         userdao.save(uservo);
+         userdao.save(uservo);////////auto crement 자동으로 안들어간다 
             try {
                 Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
