@@ -16,6 +16,8 @@
             <div th:text="${'작성자'+vo.getemail}"></div>
             내용
             <div th:text="${vo.getcontent}"></div>
+            <div th:text="${'조회수'+'&nbsp'+vo.gethit}"></div>
+
             <div th:if="${session.email==vo.getemail}">
                 <form action="/updatecontent">
                     <input type="hidden" id="bid" name="bid" th:value="${vo.getbid}">

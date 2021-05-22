@@ -20,4 +20,5 @@ public interface boarddao extends JpaRepository<boardvo,Integer>{
     List<boardvo> findByallusebid();
         ////이거다 네거티브 ㅁㅊ 몇시간쨰 뒤졌는데 진짜...
     ///이거같은데 table이름을 쓰는게 아니라 파일이름을 적어줘야하는거 같다 ㅁㅊ20210518
+    
 }

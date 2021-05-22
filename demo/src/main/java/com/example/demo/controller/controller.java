@@ -3,7 +3,7 @@ package com.example.demo.controller;
 
 
 import java.util.List;
-import java.util.UUID;
+
 
 import javax.servlet.http.HttpSession;
 import com.example.demo.boarddao.boarddao;
@@ -42,7 +42,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.client.RestTemplate;
 
 
@@ -115,6 +115,9 @@ public class controller {
     public String content(@RequestParam("bid")int bid,Model model,@RequestParam(value="page", defaultValue = "1") int currentpage) {
         try {
             boardvo vo=boarddao.findById(bid).orElseThrow();
+            vo.sethit(vo.gethit()+1);
+            boarddao.save(vo);///조회수 늘려주는 알고리즘 사라져서 다시 만듬!
+            
             int count=commentdao.findallcountbyid(bid);
             int totalpages=count/commentpaging;
             if(count%commentpaging>0)
