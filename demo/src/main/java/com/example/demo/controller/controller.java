@@ -31,7 +31,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -240,14 +239,15 @@ public class controller {
             e.printStackTrace();
          }
         System.out.println();
-       
-    
-         String coskey="1111";////관리잘해야함
-         uservo uservo=new uservo();
-         uservo.setEmail(kakaovo.kakao_account.email);////////////맥에서는 이렇게해야한다고??
-         uservo.setName(kakaovo.kakao_account.profile.nickname);////엥 왜 맥에서는 이렇게 해야 되는거지??
-         uservo.setpwd(coskey);
-         userdao.save(uservo);////////auto crement 자동으로 안들어간다 
+        String coskey="1111";////관리잘해야함
+        uservo uservo=new uservo();
+      
+            coskey="1111";////관리잘해야함
+            uservo.setEmail(kakaovo.kakao_account.email);////////////맥에서는 이렇게해야한다고??
+            uservo.setName(kakaovo.kakao_account.profile.nickname);////엥 왜 맥에서는 이렇게 해야 되는거지??
+            uservo.setpwd(coskey);
+           // userdao.save(uservo);////////auto crement 자동으로 안들어간다 
+        
             try {
                 Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uservo.getEmail(), coskey));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

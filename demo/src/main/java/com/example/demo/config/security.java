@@ -22,6 +22,8 @@ public class security extends WebSecurityConfigurerAdapter {
     @Autowired
     private principalservice principalservice;
     
+
+    
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {  
