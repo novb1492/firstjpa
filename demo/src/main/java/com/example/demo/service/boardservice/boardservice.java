@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 
 @Service
@@ -19,10 +20,12 @@ public class boardservice {
     @Autowired
     private boarddao boarddao;
     
-    public Page<boardvo> getboardlist(int pageNum) {
-        Page<boardvo>array =boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));
+    public void getboardlist(int pageNum,Model model) {
+        Page<boardvo>array =boarddao.findAll(PageRequest.of(pageNum-1, 3,Sort.by(Sort.Direction.DESC, "bid")));///이한줄짜리 코드가 엄청 소중해서 계속본다 20210517
         System.out.println(array);///// 진짜 페이징이 이렇게 편하게된다
-        return array; 
+        model.addAttribute("pages", array.getTotalPages());
+        model.addAttribute("array", array);
+      
     }
 
     public String getsessionemail() {
