@@ -9,18 +9,17 @@
     <title>Document</title>
 </head>
 <body>
-    <div th:if="${session.email==null}"><!--세션을 이렇게 model로 안넘겨도 그냥 바로 꺼내쓸수 있다 20210515 편리하다-->
+    <div sec:authorize="!isAuthenticated()"><!--${session.email}세션을 이렇게 model로 안넘겨도 그냥 바로 꺼내쓸수 있다 20210515 편리하다-->
         <a href="/auth/joinpage">회원가입</a>
         <a href="/auth/loginpage">로그인</a>
     </div>
-    <div sec:authentication="name"></div>
 
-    <div sec:authorize="isAuthenticated()"><!--else문을 모르겠다-->
-        <div th:text="${session.email}"></div>
-        <a href="/mypage">마이페이지</a>
-        <a href="/writearticle">글쓰기</a>
-        <a href="/logout">로그아웃</a><!--링크 앞에 항상 /붙여야함-->
-    </div>
+        <div sec:authorize="isAuthenticated()"><!--else문을 모르겠다--><!--이제 세션은 없는건가... 뭔가 알면 편리한데 모르면 한없이 어렵다 학원가서 진짜 집중해서 배워야겠다 20210523-->
+            <div sec:authentication="name"></div>
+            <a href="/mypage">마이페이지</a>
+            <a href="/writearticle">글쓰기</a>
+            <a href="/logout">로그아웃</a><!--링크 앞에 항상 /붙여야함-->
+        </div>
 
 <table>
     <tr>
